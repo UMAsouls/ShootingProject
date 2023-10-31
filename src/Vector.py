@@ -1,0 +1,69 @@
+import numpy as np
+
+#ベクトルを実現
+class Vector:
+    #コンストラクタ
+    def __init__(self, x, y) -> None:
+        #numpyの計算を使うための値(private)
+        self._num = np.array([0,0])
+        self.x = x
+        self.y = y
+        
+    #コピーコンストラクタ
+    def __copy__(self):
+        return Vector(self.x, self.y)
+    
+    
+    #セッター(xとyの変化を_numに反映)
+    def __setattr__(self, __name: str, __value) -> None:
+        super().__setattr__(__name, __value)
+        if(__name == "x"):
+            self._num[0] = __value
+        elif(__name == "y"):
+            self._num[1] = __value
+    
+    #加算オペレーター
+    def __add__(self, other):
+        n = self._num + other.getNum()
+        
+        return Vector(n[0], n[1])
+    
+    #減算オペレーター
+    def __sub__(self, other):
+        n = self._num - other.getNum()
+        
+        return Vector(n[0], n[1])
+    
+    #文字列化
+    def __str__(self) -> str:
+        return "[" + str(self.x) + ", " + str(self.y) + "]"
+    
+    #内部の値をnp.arrayとして返す
+    def getNum(self) :
+        return np.array([self.x, self.y])
+    
+    #内積
+    def dot(self, other) -> float:
+        return np.dot(self._num, other.getNum())
+    
+    #大きさ
+    def mag(self) -> float:
+        return np.linalg.norm(self._num, ord=2)
+    
+    #角度(degreeで出る)
+    def angle(self) -> float:
+        return np.degrees(np.arcsin(self.x/self.mag()))
+    
+    #正規化
+    def normalize(self):
+        ang = np.radians(self.angle())
+        return Vector(np.sin(ang), np.cos(ang))
+        
+    
+#デバック用
+if __name__ == "__main__" :
+    print("test")
+    v = Vector(2,2)
+    print(v)
+    v2 = Vector(1,1)
+    print(v.dot(v2))
