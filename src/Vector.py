@@ -58,6 +58,9 @@ class Vector:
     def normalize(self):
         ang = np.radians(self.angle())
         return Vector(np.sin(ang), np.cos(ang))
+    
+    def change2list(self):
+        return [self.x, self.y]
         
     
 #デバック用
