@@ -1,25 +1,36 @@
 import pygame
 import Vector
 
+#ピボット（描写位置)
 pivots = {
     "topleft":0, "top":1, "topright":2,
     "left":3, "center":4, "right":5,
     "bottomleft":6, "bottom":7, "bottomright":8
     }
 
+#全てのオブジェクトの基礎
 class GameObject(pygame.sprite.Sprite):
+    #コンストラクタ
     def __init__(self):
+        super().__init__(self)
         self.image = pygame.Surface()
         self.rect = self.image.get_rect()
         self.position = Vector(0,0)
         self.pivot = 0
+        self.name = ""
+        self.tag = ""
+        self.active = True
         
     def __init__(self, **kwargs):
-        self.image = pygame.Surface(kwargs["path"])
+        self.image = pygame.image.load(kwargs["path"])
         self.rect = self.image.get_rect()
-        self.position = Vector(kwargs["x"], kwargs["y"])
+        self.position = kwargs["pos"]
         self.pivot = 0
-        
+        self.name = kwargs["name"]
+        self.tag = kwargs["tag"]
+        self.active = True
+    
+    
     def changePivot(self, piv):
         if(type(piv) is int):
             self.pivot = piv % 9
@@ -29,6 +40,9 @@ class GameObject(pygame.sprite.Sprite):
             print(f"error: given centence {piv} isn't contained in pivots")
             
     def update(self):
+        if not self.active:
+            return
+        
         if(self.pivot == 0):
             self.rect.topleft = self.position.change2list()
         elif(self.pivot == 1):
