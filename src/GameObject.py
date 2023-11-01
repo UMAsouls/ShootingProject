@@ -1,5 +1,6 @@
 import pygame
-import Vector
+import Vector as vec
+import os
 
 #ピボット（描写位置)
 pivots = {
@@ -8,21 +9,25 @@ pivots = {
     "bottomleft":6, "bottom":7, "bottomright":8
     }
 
+#__init__のときの引数の初期値
+mem = {
+    "path" : "sample.png", "pos": vec.Vector(0,0),
+    "name" : "", "tag": ""
+}
+
 #全てのオブジェクトの基礎
 class GameObject(pygame.sprite.Sprite):
-    #コンストラクタ
-    def __init__(self):
-        super().__init__(self)
-        self.image = pygame.Surface()
-        self.rect = self.image.get_rect()
-        self.position = Vector(0,0)
-        self.pivot = 0
-        self.name = ""
-        self.tag = ""
-        self.active = True
-        
+    #コンストラクタ   
     def __init__(self, **kwargs):
-        self.image = pygame.image.load(kwargs["path"])
+        super().__init__()
+        
+        for k,v in mem.items():
+            if not k in kwargs:
+                kwargs[k] = v
+        
+        os.chdir("..")
+        self.image = pygame.image.load("image/" + kwargs["path"])
+        os.chdir("src")
         self.rect = self.image.get_rect()
         self.position = kwargs["pos"]
         self.pivot = 0
@@ -63,4 +68,7 @@ class GameObject(pygame.sprite.Sprite):
             self.rect.bottomright = self.position.change2list()
         else:
             pass
+        
+        
+
     
