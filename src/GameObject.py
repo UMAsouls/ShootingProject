@@ -1,6 +1,7 @@
 import pygame
-import Vector as vec
 import os
+
+import Vector as vec
 
 #ピボット（描写位置)
 pivots = {
@@ -15,8 +16,15 @@ mem = {
     "name" : "", "tag": ""
 }
 
+#levelの分だけ上の階層のディレクトリの絶対パスを返す
+def getParentPath(level):
+    path = __file__
+    for i in range(level+1):
+       path = os.path.abspath(os.path.join(path, os.pardir)) 
+    return path
+
 #全てのオブジェクトの基礎
-class GameObject(pygame.sprite.Sprite):
+class GameObject(pygame.sprite.DirtySprite):
     #コンストラクタ   
     def __init__(self, **kwargs):
         super().__init__()
@@ -25,9 +33,8 @@ class GameObject(pygame.sprite.Sprite):
             if not k in kwargs:
                 kwargs[k] = v
         
-        os.chdir("..")
-        self.image = pygame.image.load("image/" + kwargs["path"])
-        os.chdir("src")
+        path = getParentPath(1)
+        self.image = pygame.image.load(path + f"/image/{kwargs['path']}")
         self.rect = self.image.get_rect()
         self.position = kwargs["pos"]
         self.pivot = 0
@@ -35,7 +42,7 @@ class GameObject(pygame.sprite.Sprite):
         self.tag = kwargs["tag"]
         self.active = True
     
-    
+    #描写位置を変える
     def changePivot(self, piv):
         if(type(piv) is int):
             self.pivot = piv % 9
@@ -43,8 +50,9 @@ class GameObject(pygame.sprite.Sprite):
             self.pivot = pivots[piv]
         else:
             print(f"error: given centence {piv} isn't contained in pivots")
-            
-    def update(self):
+    
+    #更新処理  
+    def update(self,gm):
         if not self.active:
             return
         
