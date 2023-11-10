@@ -1,6 +1,1 @@
-<<<<<<< HEAD
-thiistest
-again
-=======
 test!
->>>>>>> 70fb11a8b8d6bbed8c2914b7c8b7586609a940a7
