@@ -5,7 +5,7 @@ class Vector:
     #コンストラクタ
     def __init__(self, x, y) -> None:
         #numpyの計算を使うための値(private)
-        self._num = np.array([0,0])
+        self.__num = np.array([0,0])
         self.x = x
         self.y = y
         
@@ -14,23 +14,23 @@ class Vector:
         return Vector(self.x, self.y)
     
     
-    #セッター(xとyの変化を_numに反映)
+    #セッター(xとyの変化を__numに反映)
     def __setattr__(self, __name: str, __value) -> None:
         super().__setattr__(__name, __value)
         if(__name == "x"):
-            self._num[0] = __value
+            self.__num[0] = __value
         elif(__name == "y"):
-            self._num[1] = __value
+            self.__num[1] = __value
     
     #加算オペレーター
     def __add__(self, other):
-        n = self._num + other.getNum()
+        n = self.__num + other.getNum()
         
         return Vector(n[0], n[1])
     
     #減算オペレーター
     def __sub__(self, other):
-        n = self._num - other.getNum()
+        n = self.__num - other.getNum()
         
         return Vector(n[0], n[1])
     
@@ -44,11 +44,11 @@ class Vector:
     
     #内積
     def dot(self, other) -> float:
-        return np.dot(self._num, other.getNum())
+        return np.dot(self.__num, other.getNum())
     
     #大きさ
     def mag(self) -> float:
-        return np.linalg.norm(self._num, ord=2)
+        return np.linalg.norm(self.__num, ord=2)
     
     #角度(degreeで出る)
     def angle(self) -> float:
