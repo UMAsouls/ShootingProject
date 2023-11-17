@@ -1,0 +1,5 @@
+[
+    {"class": "TestObject", "pos": [20, 12], "name" : "test", "tag": "Test", "path": "sample.png" , "vec": [5,4]},
+    {"class": "TestObject", "pos": [60, 60], "name" : "test2", "tag": "Test", "path": "sample.png"},
+    {"class": "TestBG", "pos": [0,0], "name" : "testbg", "tag": "Test", "path": "bg_sample2.png"}
+]
