@@ -8,8 +8,7 @@ from GameObject import GameObject
 
 class Edge(GameObject):
     def __init__(self, **kwargs):
-        super().__init__(kwargs)
-        
+        super().__init__()
         
 
 

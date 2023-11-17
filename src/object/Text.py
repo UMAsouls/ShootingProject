@@ -8,10 +8,6 @@ from GameObject import GameObject
 
 class Text(GameObject):
     def __init__(self, **kwargs):
-        super().__init__(kwargs)
+        super().__init__()
         
         
-
-
-def Start(gm):
-    pass

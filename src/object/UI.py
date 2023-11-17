@@ -5,14 +5,11 @@ import os
 os.chdir("..")
 
 from GameObject import GameObject
+from ObjectGroup import ObjectGroup
 from .Text import Text
 
-class Text(pygame.sprite.LayeredDirty):
+class UI(ObjectGroup):
     def __init__(self):
         super().__init__()
         
         
-
-
-def Start(gm):
-    pass
