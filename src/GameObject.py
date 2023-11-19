@@ -50,7 +50,7 @@ class GameObject(pygame.sprite.DirtySprite, IGameObject):
         
         self.visible :bool = True
         self.layer :int = 5
-        self.dirty :int = 1
+        self.dirty :int = 2
         
         Drawer.add(self)
     
@@ -128,7 +128,6 @@ class GameObject(pygame.sprite.DirtySprite, IGameObject):
             
     def set_data(self, data):
         path :str = get_parent_path(1)
-        print(path + f"/image/{data['path']}")
         self.image = pygame.image.load(path + f"/image/{data['path']}")
         self.rect = self.image.get_rect()
         self.name = data["name"]
