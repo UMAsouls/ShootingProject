@@ -1,4 +1,10 @@
-[
-    {"class": "TestObject", "pos": [20, 12], "name" : "test", "tag": "Test", "path": "sample.png"},
-    {"class": "TestBG", "pos" : [0,0], "name" : "bg", "tag": "bg", "path" : "bg_sample.png"}
-]
+{
+
+    "use" : "test",
+    "obj": 
+    [
+        {"class": "TestObject", "pos": [20, 12], "name" : "test", "tag": "Test", "path": "sample.png"},
+        {"class": "TestBG", "pos" : [0,0], "name" : "bg", "tag": "bg", "path" : "bg_sample.png"}
+    ]
+
+}
