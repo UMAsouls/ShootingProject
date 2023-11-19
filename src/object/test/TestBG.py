@@ -2,7 +2,7 @@ import pygame
 from pygame import locals
 import os
 
-os.chdir("..")
+os.chdir("../..")
 
 from IGroups import IGroups
 
@@ -28,7 +28,7 @@ class TestBG(GameObject):
             self.moving = False
         else:
             self.time -= 1
-        test_sp : GameObject = groups.get_single("test2")
+        test_sp : GameObject = groups.get_single("test")
         
         #print(test_sp.name)
     

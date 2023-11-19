@@ -2,11 +2,11 @@ import pygame
 from pygame import locals
 import os
 
-os.chdir("..")
+os.chdir("../..")
 
 from GameObject import GameObject
 
-class Bullet(GameObject):
+class Text(GameObject):
     def __init__(self, **kwargs):
         super().__init__()
         

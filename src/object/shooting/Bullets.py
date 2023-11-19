@@ -2,14 +2,13 @@ import pygame
 from pygame import locals
 import os
 
-os.chdir("..")
+os.chdir("../..")
 
 from GameObject import GameObject
 from ObjectGroup import ObjectGroup
-from .Text import Text
+from .Bullet import Bullet
 
-class UI(ObjectGroup):
+class Bullets(ObjectGroup):
     def __init__(self):
         super().__init__()
-        
         

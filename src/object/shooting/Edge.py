@@ -2,7 +2,7 @@ import pygame
 from pygame import locals
 import os
 
-os.chdir("..")
+os.chdir("../..")
 
 from GameObject import GameObject
 
