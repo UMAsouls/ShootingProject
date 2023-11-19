@@ -2,25 +2,29 @@ import pygame
 from pygame.locals import *
 import sys
 import os
-import abc
 import json
 
 from IGameObject import IGameObject
 from IObjectGroup import IObjectGroup
 from IGroups import IGroups
+from IKey import IKey
 
 from Vector import Vector
 
 from Dependencybuillder import Dependency
 from Drawer import Drawer
 
-for i in os.listdir("object"):
-    if i[0] != "_":
-        exec(f"from object.{i}"[0:-3] + " import " + f"{i}"[0:-3])
-
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
+#objectから全てimport
+for i in os.listdir("object"):
+    os.chdir(os.path.dirname(os.path.abspath(__file__)))
+    if i[0] == "_" or i[0] == ".": 
+        continue
+    exec(f"from object" + " import " + f"{i}")
+
 groups: IGroups = Dependency[IGroups]()
+key: IKey = Dependency[IKey]()
 
 #levelの分だけ上の階層のディレクトリの絶対パスを返す
 def get_parent_path(level):
@@ -50,8 +54,8 @@ class GManager:
     #jsonデータをセット
     #同時にそのjsonでロードされる全てをgroupsに追加  
     def set_data(self, data):
-        for d in data:
-            obj = self.make_obj_from_str(d["class"])               
+        for d in data["obj"]:
+            obj = self.make_obj_from_str(f"{data['use']}.{d['class']}")
             obj.set_data(d)
             
             if(isinstance(obj, IGameObject)):
@@ -61,7 +65,7 @@ class GManager:
             else:
                 group: IObjectGroup = obj
                 for d2 in d["data"]:
-                    obj: IGameObject = self.make_obj_from_str(d2["class"])
+                    obj: IGameObject = self.make_obj_from_str(f"{data['use']}.{d2['class']}")
                     obj.set_data(d2)
                     group.add(obj)
                 
@@ -81,15 +85,21 @@ class GManager:
         Drawer.update()
         Drawer.draw(self.screen)
         
-        #イベント処理(後で移動)
+        key.update()
+        
         for event in pygame.event.get():
             if(event.type == QUIT):
                 pygame.quit()
                 sys.exit()
+                
             if(event.type == KEYDOWN):
                 if(event.key == K_ESCAPE):
                     pygame.quit()
                     sys.exit()
+                key.key_down_update(event)
+                
+            if(event.type == KEYUP):
+                key.key_up_update(event)
     
     #メインループ    
     def MainLoop(self):
