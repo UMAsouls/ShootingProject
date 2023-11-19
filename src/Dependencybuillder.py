@@ -6,6 +6,8 @@ from IObjectGroup import IObjectGroup
 from ObjectGroup import ObjectGroup
 from IGroups import IGroups
 from Groups import Groups
+from IKey import IKey
+from Key import Key
 
 class Dependencybuillder:
     def __init__(self):
@@ -20,6 +22,8 @@ class Dependencybuillder:
         binder.bind(IObjectGroup, to=ObjectGroup)
         #
         binder.bind(IGroups, to=Groups, scope=injector.SingletonScope)
+        #
+        binder.bind(IKey, to=Key, scope=injector.SingletonScope)
         
     def __getitem__(self, klass):
         return lambda: self._injector.get(klass)
