@@ -84,6 +84,11 @@ class GameObject(IGameObject):
     @name.setter
     def name(self, name) ->None:
         self._name = name
+
+    
+    @property
+    def position(self):
+        return self._position
         
         
     @property

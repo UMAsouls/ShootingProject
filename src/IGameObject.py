@@ -12,6 +12,11 @@ class IGameObject(pygame.sprite.DirtySprite,metaclass = abc.ABCMeta):
     def name(self, name: str) -> None:
         raise NotImplementedError()
     
+    @property
+    @abc.abstractclassmethod
+    def position(self):
+        raise NotImplementedError()
+    
     @abc.abstractclassmethod
     def update(self) -> None:
         raise NotImplementedError()

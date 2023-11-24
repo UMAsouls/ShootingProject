@@ -22,7 +22,7 @@ class Drawer(IDrawer, Singleton):
 
     def draw(self, screen: pygame.Surface):
         rects = pygame.sprite.LayeredDirty.draw(self,screen)
-        pygame.display.update(self.rect_list)
+        pygame.display.update()
         return rects
         
     def update(self):
