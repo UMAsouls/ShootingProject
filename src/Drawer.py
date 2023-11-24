@@ -1,31 +1,64 @@
+from typing import Any, Iterable, Union
 import pygame
+import injector
+from pygame.sprite import AbstractGroup
 
 from IGameObject import IGameObject
+from IDrawer import IDrawer
 
-class Drawer:
-    objects:pygame.sprite.LayeredDirty = pygame.sprite.LayeredDirty()
+class Singleton(object):
+    def __new__(cls, *args, **kargs):
+        if not hasattr(cls, "_instance"):
+            cls._instance = super(Singleton, cls).__new__(cls)
+        return cls._instance
+
+class Drawer(IDrawer, Singleton):
     
-    @classmethod
-    def add(cls, obj: IGameObject):
-        cls.objects.add(obj)
+    def __init__(self, *sprites: Any, **kwargs: Any) -> None:
+        if not hasattr(self, "_isinit"):
+            super().__init__(*sprites, **kwargs)
+            self.rect_list = []
+            self._isinit = True
+
+    def draw(self, screen: pygame.Surface):
+        rects = pygame.sprite.LayeredDirty.draw(self,screen)
+        pygame.display.update(self.rect_list)
+        return rects
         
-    @classmethod
-    def draw(cls, screen: pygame.Surface):
-        cls.objects.draw(screen)
+    def update(self):
+        self.rect_list = []
+        rects1 = []
+        rects2 = []
+        for i in self.sprites():
+            #コピーじゃないと参照が共有されて変更前との差分が作れない
+            rects1.append(i.rect.copy())
+            
+        pygame.sprite.LayeredDirty.update(self)
         
+        for i in self.sprites():
+            rects2.append(i.rect.copy())
+            
+        for v,i in enumerate(rects1):
+            i: pygame.Rect
+            j: pygame.Rect = rects2[v]
+            if(i.center != j.center or i.size != j.size):
+                self.rect_list.append(i)
+                self.rect_list.append(j)
+                
+class Dependencybuillder:
+    def __init__(self):
+        self._injector = injector.Injector(self.__class__.configure)
+    
+    #injectorの初期化処理
     @classmethod
-    def update(cls):
-        rect_list = []
-        for i in cls.objects.sprites():
-            if i.moving: rect_list.append(i.rect)
-            
-        cls.objects.update()
+    def configure(cls, binder: injector.Binder):
+        #
+        binder.bind(IDrawer, to=Drawer)
         
-        for i in cls.objects.sprites():
-            if i.moving: rect_list.append(i.rect)
-            
-        print(len(rect_list))
-            
-        pygame.display.update(rect_list)
+    def __getitem__(self, klass):
+        return lambda: self._injector.get(klass)
+    
+
+Dependency = Dependencybuillder()
             
         

@@ -9,10 +9,6 @@ from IGroups import IGroups
 from GameObject import GameObject
 from Vector import Vector
 
-from Dependencybuillder import Dependency
-
-groups : IGroups = Dependency[IGroups]()
-
 class Machine(GameObject):
     def __init__(self):
         super().__init__()

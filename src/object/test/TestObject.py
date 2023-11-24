@@ -6,40 +6,31 @@ import os
 #src内のものをimportするためカレントディレクトリ移動
 os.chdir("../..")
 
-from IKey import IKey
-
 from GameObject import GameObject
 from Vector import Vector
 
-from Dependencybuillder import Dependency
-
-key :IKey = Dependency[IKey]()
-
 class TestObject(GameObject):
-    def __init__(self):
-        super().__init__()
-        
-        self.vec = Vector(0,0)
     
     def set_data(self, data):
         super().set_data(data)
         
-        if "vec" in data:
-            self.vec = Vector(data["vec"][0], data["vec"][1])
+        self.vel = Vector(0,0)
+        
+        if "speed" in data:
+            self.speed = data["speed"]
        
     def update(self):
         super().update()
-        self.vec = Vector(0,0)
+        self.vel = Vector(0,0)
         
-        if(key.get_key_repeat(K_a)):
-            self.vec += Vector(-5,0)
-        if(key.get_key_repeat(K_d)):
-            self.vec += Vector(5,0)
-        if(key.get_key_repeat(K_w)):
-            self.vec += Vector(0,-5)
-        if(key.get_key_repeat(K_s)):
-            self.vec += Vector(0,5)
+        if(self._key.get_key_repeat("a")):
+            self.vel += Vector(-1*self.speed,0)
+        if(self._key.get_key_repeat("d")):
+            self.vel += Vector(self.speed,0)
+        if(self._key.get_key_repeat("w")):
+            self.vel += Vector(0,-1*self.speed)
+        if(self._key.get_key_repeat("s")):
+            self.vel += Vector(0,self.speed)
             
-        self._position += self.vec
-            
+        self._position += self.vel
             

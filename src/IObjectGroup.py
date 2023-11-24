@@ -1,8 +1,9 @@
 import abc
+import pygame
 
 from IGameObject import IGameObject
 
-class IObjectGroup(metaclass = abc.ABCMeta):
+class IObjectGroup(pygame.sprite.LayeredDirty,metaclass = abc.ABCMeta):
     @property
     @abc.abstractclassmethod
     def name(self) -> str:
@@ -12,15 +13,6 @@ class IObjectGroup(metaclass = abc.ABCMeta):
     @abc.abstractclassmethod
     def name(self, name: str) -> None:
         raise NotImplementedError()
-    
-    @property
-    @abc.abstractclassmethod
-    def is_single(self) -> bool:
-        raise NotImplementedError()
-    
-    @abc.abstractclassmethod
-    def set_single(self, obj: IGameObject):
-        raise NotImplementedError
     
     @abc.abstractclassmethod
     def set_data(self, data: list):

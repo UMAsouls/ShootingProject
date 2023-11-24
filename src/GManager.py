@@ -6,13 +6,23 @@ import json
 
 from IGameObject import IGameObject
 from IObjectGroup import IObjectGroup
+from ISingleGroup import ISingleGroup
 from IGroups import IGroups
 from IKey import IKey
+from IDrawer import IDrawer
+from ISceneLoader import ISceneLoader
+
+import GameObject
+import ObjectGroup
+import SingleGroup
+import Drawer
+import Groups
+import Key
+import SceneLoader
+
+from Objectbuillder import Dependencybuillder
 
 from Vector import Vector
-
-from Dependencybuillder import Dependency
-from Drawer import Drawer
 
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
@@ -22,9 +32,7 @@ for i in os.listdir("object"):
     if i[0] == "_" or i[0] == ".": 
         continue
     exec(f"from object" + " import " + f"{i}")
-
-groups: IGroups = Dependency[IGroups]()
-key: IKey = Dependency[IKey]()
+    
 
 #levelの分だけ上の階層のディレクトリの絶対パスを返す
 def get_parent_path(level):
@@ -40,14 +48,20 @@ class GManager:
         pygame.init()
         #ゲーム画面
         self.screen = pygame.display.set_mode([1920,1080], FULLSCREEN)
+        self.groups: IGroups = Groups.Dependency[IGroups]()
+        self.key: IKey = Key.Dependency[IKey]()
+        self.drawer: IDrawer = Drawer.Dependency[IDrawer]()
+        self.scene_loader : ISceneLoader = SceneLoader.Dependency[ISceneLoader]()
     
     #strからobj生成
     @classmethod   
     def make_obj_from_str(cls, c_name: str):
         if(c_name == ""):
-            obj = Dependency[IGameObject]()
+            dep = GameObject.Dependency
         else:
-            obj = eval(f"{c_name}()")
+            dep = Dependencybuillder(c_name)
+            
+        obj = dep[IGameObject]()
             
         return obj
         
@@ -60,32 +74,32 @@ class GManager:
             
             if(isinstance(obj, IGameObject)):
                 obj: IGameObject
-                group: IObjectGroup = Dependency[IObjectGroup]()
-                group.set_single(obj)
+                self.drawer.add(obj)
+                print(self.drawer.sprites())
+                group: ISingleGroup = SingleGroup.Dependency[ISingleGroup]()
+                group.set_main(obj)
             else:
                 group: IObjectGroup = obj
+                #json内でグループ型があった際の処理（応急処置：入れ子でも対応すべきか？）
                 for d2 in d["data"]:
                     obj: IGameObject = self.make_obj_from_str(f"{data['use']}.{d2['class']}")
                     obj.set_data(d2)
+                    self.drawer.add(obj)
                     group.add(obj)
                 
-            groups.add_group(group)
-                
-                
-    #一つのステージロード
-    def scene_load(self,path) -> None:
-        path = get_parent_path(1) + "/json/" + path
-        with open(path) as f:
-            data = json.load(f)
-            
-        self.set_data(data)
+            self.groups.add_group(group)
+        
+    #ゲームの開始処理
+    def start(self) -> None:
+        self.drawer.draw(self.screen)
+        pygame.display.update()
     
     #ゲームの更新処理
     def update(self) -> None:
-        Drawer.update()
-        Drawer.draw(self.screen)
+        self.drawer.update()
+        self.drawer.draw(self.screen)
         
-        key.update()
+        self.key.update()
         
         for event in pygame.event.get():
             if(event.type == QUIT):
@@ -96,15 +110,22 @@ class GManager:
                 if(event.key == K_ESCAPE):
                     pygame.quit()
                     sys.exit()
-                key.key_down_update(event)
+                self.key.key_down_update(event)
                 
             if(event.type == KEYUP):
-                key.key_up_update(event)
+                self.key.key_up_update(event)
     
     #メインループ    
     def MainLoop(self):
+        self.scene_loader.end_scene
         while True:
-            self.update()
+            self.set_data(self.scene_loader.scene_data)
+            self.start()
+            while True:
+                self.update()
+                if self.scene_loader.end_scene:
+                    break
+            
         
             
         

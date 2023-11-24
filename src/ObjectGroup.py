@@ -1,17 +1,18 @@
 import pygame
+import sys
+import injector
 
 from IObjectGroup import IObjectGroup
 from IGameObject import IGameObject
 
 from Drawer import Drawer
 
-class ObjectGroup(pygame.sprite.LayeredDirty, IObjectGroup):
+class ObjectGroup(IObjectGroup):
     def __init__(self) -> None:
         super().__init__()
         
         self._name = ""
         self._dict = {}
-        self._is_single = False
         
     @property
     def name(self) -> str:
@@ -28,26 +29,31 @@ class ObjectGroup(pygame.sprite.LayeredDirty, IObjectGroup):
     def set_dict(self, n:str, v:int) -> None:
         self._dict[n] = v
         
-    @property
-    def is_single(self) -> bool:
-        return self._is_single
         
-        
-    def set_single(self, obj: IGameObject):
-        self.name = obj.name
-        self.add(obj)
-        self._is_single = True
-        
-        
-    def set_data(self, data: list) -> None:
+    def set_data(self, data: dict) -> None:
         self._name = data["name"]
-        self.add_group(self)
     
     def add(self, *sprites: IGameObject):
-        super().add(*sprites)
+        pygame.sprite.LayeredDirty.add(self,*sprites)
         for i in sprites:
             if i.name in self._dict:
                 print("error: don't add same name objects")
-                raise Exception
+                pygame.quit()
+                sys.exit()
                 
             self._dict[i.name] = len(self.sprites())
+            
+class Dependencybuillder:
+    def __init__(self):
+        self._injector = injector.Injector(self.__class__.configure)
+    
+    #injectorの初期化処理
+    @classmethod
+    def configure(cls, binder: injector.Binder):
+        binder.bind(IObjectGroup, to=ObjectGroup)
+        
+    def __getitem__(self, klass):
+        return lambda: self._injector.get(klass)
+    
+
+Dependency = Dependencybuillder()

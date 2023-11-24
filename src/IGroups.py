@@ -6,7 +6,7 @@ from IGameObject import IGameObject
 class IGroups(metaclass = abc.ABCMeta):
     
     @abc.abstractclassmethod
-    def get_group(self, name:str) -> IObjectGroup:
+    def get_group_by_name(self, name:str) -> IObjectGroup:
         raise NotImplementedError()
     
     @abc.abstractclassmethod
@@ -14,5 +14,5 @@ class IGroups(metaclass = abc.ABCMeta):
         raise NotImplementedError()
     
     @abc.abstractclassmethod
-    def get_single(self, name:str) -> IGameObject:
+    def get_single_by_name(self, name:str) -> IGameObject:
         raise NotImplementedError()

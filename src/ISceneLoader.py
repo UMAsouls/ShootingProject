@@ -1,21 +1,22 @@
 import abc
-import pygame
+from typing import List,Dict
 
-class IGameObject(pygame.sprite.DirtySprite,metaclass = abc.ABCMeta):
+
+class ISceneLoader(metaclass=abc.ABCMeta):
+    @abc.abstractclassmethod
+    def __init__(self) -> None:
+        raise NotImplementedError()
+    
+    @abc.abstractclassmethod
+    def scene_load(self, path: str) -> None:
+        raise NotImplementedError()
+    
     @property
     @abc.abstractclassmethod
-    def name(self) -> str:
+    def scene_data(self):
         raise NotImplementedError()
     
-    @name.setter
+    @property
     @abc.abstractclassmethod
-    def name(self, name: str) -> None:
-        raise NotImplementedError()
-    
-    @abc.abstractclassmethod
-    def update(self) -> None:
-        raise NotImplementedError()
-    
-    @abc.abstractclassmethod
-    def set_data(self, data) -> None:
+    def end_scene(self) -> bool:
         raise NotImplementedError()

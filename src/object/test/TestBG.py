@@ -4,31 +4,24 @@ import os
 
 os.chdir("../..")
 
-from IGroups import IGroups
-
 from GameObject import GameObject
 from Vector import Vector
 
-from Dependencybuillder import Dependency
-from Drawer import Drawer
-
-groups : IGroups = Dependency[IGroups]()
-
 class TestBG(GameObject):
-    def __init__(self):
-        super().__init__()
+    
+    def set_data(self, data):
+        super().set_data(data)
         
-        Drawer.objects.change_layer(self, 0)
-        
-        self.time = 0
+        self.time = 1
         
     def update(self):
         super().update()
         if(self.time < 0):
             self.moving = False
+            
         else:
             self.time -= 1
-        test_sp : GameObject = groups.get_single("test")
+        test_sp : GameObject = self._groups.get_single_by_name("test")
         
         #print(test_sp.name)
     

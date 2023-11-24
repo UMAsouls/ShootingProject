@@ -3,7 +3,7 @@ from GManager import GManager
 
 def main():
     gm = GManager()
-    gm.scene_load("test.json")
+    gm.scene_loader.scene_load("test2.json")
     gm.MainLoop()
 
 
