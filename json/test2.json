@@ -4,7 +4,10 @@
     "obj": 
     [
         {"class": "TestObject", "pos": [20, 12], "name" : "test", "tag": "Test", "path": "sample.png", "layer":5, "speed": 7},
-        {"class": "TestBG", "pos" : [0,0], "name" : "bg", "tag": "bg", "path" : "bg_sample.png", "layer":0}
+        {"class": "TestBG", "pos" : [0,0], "name" : "bg", "tag": "bg", "path" : "bg_sample.png", "layer":0},
+        {"class": "TestBullet", "pos": [1000, 120], "name" : "bu_t", "tag": "Test", "path": "ball.png", "layer":4, "speed": 7},
+        {"class": "TestEnemy", "pos": [1000, 120], "name" : "enemy_t", "tag": "Test", "path": "sample.png", "layer":5, "speed": 7}   
     ]
+    
 
 }
