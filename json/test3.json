@@ -5,7 +5,7 @@
     [
         {"class": "TestObject", "pos": [40, 50], "name" : "test", "tag": "Test", "path": "sample.png", "layer":5, "speed": 7},
         {"class": "TestBG", "pos" : [0,0], "name" : "bg", "tag": "bg", "path" : "bg_sample.png", "layer":0},
-        {"class": "TestGoal", "pos" : [20,30], "name" : "bg", "tag": "goal", "path" : "bg_sample3.png", "layer":0}
+        {"class": "TestGoal", "pos" : [500,30], "name" : "goal", "tag": "goal", "path" : "bg_sample3.png", "layer":0}
     ]
 
 }
