@@ -52,6 +52,10 @@ class GManager:
         self.key: IKey = Key.Dependency[IKey]()
         self.drawer: IDrawer = Drawer.Dependency[IDrawer]()
         self.scene_loader : ISceneLoader = SceneLoader.Dependency[ISceneLoader]()
+        
+    def reload(self) -> None:
+        self.groups.init()
+        self.drawer.init()
     
     #strからobj生成
     @classmethod   
@@ -124,6 +128,7 @@ class GManager:
             while True:
                 self.update()
                 if self.scene_loader.end_scene:
+                    self.reload()
                     break
             
         

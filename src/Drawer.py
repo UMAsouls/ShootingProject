@@ -19,6 +19,10 @@ class Drawer(IDrawer, Singleton):
             super().__init__(*sprites, **kwargs)
             self.rect_list = []
             self._isinit = True
+            
+    def init(self) -> None:
+        del self._isinit
+        self.__init__()
 
     def draw(self, screen: pygame.Surface):
         rects = pygame.sprite.LayeredDirty.draw(self,screen)
