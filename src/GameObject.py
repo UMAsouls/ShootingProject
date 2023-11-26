@@ -104,6 +104,9 @@ class GameObject(IGameObject):
             self.__pivot = PIVOTS[piv]
         else:
             print(f"error: given centence {piv} isn't contained in pivots")
+            
+    def on_collide(self, obj: IGameObject):
+        pass
     
     #更新処理  
     def update(self):
@@ -132,6 +135,12 @@ class GameObject(IGameObject):
             self.rect.bottomright = self._position.change2list()
         else:
             pass
+        
+        collides = pygame.sprite.spritecollide(self, self._drawer, False)
+        
+        for i in collides:
+            self.on_collide(i)
+            
             
     #jsonデータのセット       
     def set_data(self, data):
