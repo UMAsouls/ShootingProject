@@ -1,8 +1,10 @@
 import pygame
 from pygame.locals import *
 import injector
+import os
 
-from IKey import IKey
+from GameObject import IKey as I0
+from GManager import IKey as I1
 
 #全てのアルファベットの辞書
 key_dict = {pygame.key.name(K_a+i) : K_a+i for i in range(26)}
@@ -13,7 +15,7 @@ class Singleton(object):
             cls._instance = super(Singleton, cls).__new__(cls)
         return cls._instance
 
-class Key(IKey, Singleton):
+class Key(I0,I1, Singleton):
     def __init__(self):
         if hasattr(self, "_isinit"):
             return
@@ -61,8 +63,9 @@ class Dependencybuillder:
     #injectorの初期化処理
     @classmethod
     def configure(cls, binder: injector.Binder):
-        #IGameObjectにGameObjectを紐づけ
-        binder.bind(IKey, to=Key)
+        #
+        binder.bind(I0, to=Key)
+        binder.bind(I1, to=Key)
         
     def __getitem__(self, klass):
         return lambda: self._injector.get(klass)

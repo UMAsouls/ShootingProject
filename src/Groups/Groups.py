@@ -1,10 +1,16 @@
 import pygame
 import injector
+import sys
+import os
 
-from IGroups import IGroups
-from IObjectGroup import IObjectGroup
-from IGameObject import IGameObject
-from ISingleGroup import ISingleGroup
+from . import IGameObject
+from . import IObjectGroup
+from . import ISingleGroup
+
+from GameObject import IGroups as I0
+from GManager import IGroups as I1
+
+from DependencyMaker import DependencyMaker
 
 class Singleton(object):
     def __new__(cls, *args, **kargs):
@@ -12,7 +18,7 @@ class Singleton(object):
             cls._instance = super(Singleton, cls).__new__(cls)
         return cls._instance
 
-class Groups(IGroups, Singleton):
+class Groups(I0,I1,Singleton):
     def __init__(self) -> None:
         if hasattr(self, "_isinit"):
             return
@@ -32,8 +38,9 @@ class Groups(IGroups, Singleton):
     def add_group(self, group: IObjectGroup) -> IObjectGroup:
         if group.name in self._groups:
             print(self._groups, group.name)
-            print("\nERROR: Don't put same name object or group\n")
-            raise ArithmeticError()
+            print("\nERROR: Don't put same name group\n")
+            pygame.quit()
+            sys.exit()
         
         self._groups[group.name] = group
         if isinstance(group, ISingleGroup):
@@ -49,18 +56,12 @@ class Groups(IGroups, Singleton):
     
     
     
-class Dependencybuillder:
-    def __init__(self):
-        self._injector = injector.Injector(self.__class__.configure)
-    
+class Dependencybuillder(DependencyMaker):
     #injectorの初期化処理
     @classmethod
     def configure(cls, binder: injector.Binder):
         #
-        binder.bind(IGroups, to=Groups)
+        binder.bind(I0, to=Groups)
+        binder.bind(I1, to=Groups)
         
-    def __getitem__(self, klass):
-        return lambda: self._injector.get(klass)
-    
-
 Dependency = Dependencybuillder()

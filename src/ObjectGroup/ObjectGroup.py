@@ -1,13 +1,15 @@
 import pygame
 import sys
 import injector
+import os
 
-from IObjectGroup import IObjectGroup
-from IGameObject import IGameObject
+from .IGameObject import IGameObject
 
-from Drawer import Drawer
+from Groups import IObjectGroup as I0
+from GameObject import IObjectGroup as I1
+from GManager import IObjectGroup as I2
 
-class ObjectGroup(IObjectGroup):
+class ObjectGroup(I0,I1,I2):
     def __init__(self) -> None:
         super().__init__()
         
@@ -50,7 +52,8 @@ class Dependencybuillder:
     #injectorの初期化処理
     @classmethod
     def configure(cls, binder: injector.Binder):
-        binder.bind(IObjectGroup, to=ObjectGroup)
+        binder.bind(I0, to=ObjectGroup)
+        binder.bind(I1, to=ObjectGroup)
         
     def __getitem__(self, klass):
         return lambda: self._injector.get(klass)

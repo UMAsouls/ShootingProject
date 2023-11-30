@@ -1,7 +1,7 @@
 import abc
 
-from IObjectGroup import IObjectGroup
-from IGameObject import IGameObject
+from .IObjectGroup import IObjectGroup
+from .IGameObject import IGameObject
 
 class IGroups(metaclass = abc.ABCMeta):
     

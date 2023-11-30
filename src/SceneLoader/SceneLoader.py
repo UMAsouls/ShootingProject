@@ -3,7 +3,8 @@ import os
 from typing import List
 import injector
 
-from ISceneLoader import ISceneLoader
+from GManager import ISceneLoader as I0
+from GameObject import ISceneLoader as I1
 
 from DependencyMaker import DependencyMaker
 
@@ -20,7 +21,9 @@ def get_parent_path(level):
        path = os.path.abspath(os.path.join(path, os.pardir)) 
     return path
 
-class SceneLoader(ISceneLoader,Singleton):
+PROJECT_PATH = os.path.dirname(os.getcwd())
+
+class SceneLoader(I0,I1,Singleton):
     def __init__(self) -> None:
         if hasattr(self, "_isinited"):
             return
@@ -31,7 +34,7 @@ class SceneLoader(ISceneLoader,Singleton):
         self._end_scene : bool = False
         
     def scene_load(self, path: str) -> None:
-        path = get_parent_path(1) + "/json/" + path
+        path = PROJECT_PATH + "/json/" + path
         with open(path) as f:
             data = json.load(f)
             
@@ -56,6 +59,7 @@ class Dependencybuillder(DependencyMaker):
     
     @classmethod
     def configure(cls, binder: injector.Binder):
-        binder.bind(ISceneLoader, to=SceneLoader)
+        binder.bind(I0, to=SceneLoader)
+        binder.bind(I1, to=SceneLoader)
         
 Dependency = Dependencybuillder()

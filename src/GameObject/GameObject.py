@@ -6,20 +6,18 @@ import sys
 import injector
 
 from Vector import Vector
-from IGameObject import IGameObject
-from IObjectGroup import IObjectGroup
-from IGroups import IGroups
-from IDrawer import IDrawer
-from IKey import IKey
-from ISceneLoader import ISceneLoader
 
-from Groups import Groups
-from Drawer import Drawer
-from Key import Key
-from SceneLoader import SceneLoader
+from . import IObjectGroup
+from . import IGroups
+from . import IDrawer
+from . import IKey
+from . import ISceneLoader
 
-
-from Drawer import Drawer
+from Drawer import IGameObject as I0
+from GManager import IGameObject as I1
+from Groups import IGameObject as I2
+from ObjectGroup import IGameObject as I3
+from . import IGameObject as I4
 
 #ピボット（描写位置)
 PIVOTS = {
@@ -28,6 +26,7 @@ PIVOTS = {
     "bottomleft":6, "bottom":7, "bottomright":8
     }
 
+PROJECT_PATH = os.path.dirname(os.getcwd())
 
 #levelの分だけ上の階層のディレクトリの絶対パスを返す
 def get_parent_path(level):
@@ -37,15 +36,15 @@ def get_parent_path(level):
     return path
 
 #全てのオブジェクトの基礎
-class GameObject(IGameObject):
+class GameObject(I0,I1,I2,I3,I4):
     #コンストラクタ
     @injector.inject
-    def __init__(self, groups: IGroups, drawer: IDrawer, key: IKey, scene_loader: SceneLoader):
+    def __init__(self, groups: IGroups, drawer: IDrawer, key: IKey, scene_loader: ISceneLoader):
         super().__init__()
         self.image :pygame.Surface = pygame.Surface([0,0])
         self.rect :pygame.Rect = self.image.get_rect()
         
-        self._position :Vector = ""
+        self._position :Vector = None
         self.__pivot :int = 0
         self._name :str = ""
         self._tag :str = ""
@@ -105,7 +104,7 @@ class GameObject(IGameObject):
         else:
             print(f"error: given centence {piv} isn't contained in pivots")
             
-    def on_collide(self, obj: IGameObject):
+    def on_collide(self, obj: "GameObject"):
         pass
     
     #更新処理  
@@ -144,25 +143,32 @@ class GameObject(IGameObject):
             
     #jsonデータのセット       
     def set_data(self, data):
-        path :str = get_parent_path(1)
-        self.image = pygame.image.load(path + f"/image/{data['path']}")
+        self.image = pygame.image.load(PROJECT_PATH + f"/image/{data['path']}")
         self.rect = self.image.get_rect()
         self.name = data["name"]
         self.tag = data["tag"]
         self._position = Vector(data["pos"][0], data["pos"][1])
         self.layer = data["layer"]
-        
 
-#DIコンテナ     
-class Dependencybuillder:
-    def __init__(self):
-        self._injector = injector.Injector(self.__class__.configure)
-    
+
+from DependencyMaker import DependencyMaker
+
+from Groups import Groups
+from Key import Key
+from Drawer import Drawer
+from SceneLoader import SceneLoader
+
+#DIコンテナ
+class Dependencybuillder(DependencyMaker):
     #injectorの初期化処理
     @classmethod
     def configure(cls, binder: injector.Binder):
         #IGameObjectにGameObjectを紐づけ
-        binder.bind(IGameObject, to=GameObject)
+        binder.bind(I0, to=GameObject)
+        binder.bind(I1, to=GameObject)
+        binder.bind(I2, to=GameObject)
+        binder.bind(I3, to=GameObject)
+        binder.bind(I4, to=GameObject)
         #
         binder.bind(IGroups, to=Groups)
         #
@@ -172,8 +178,4 @@ class Dependencybuillder:
         #
         binder.bind(ISceneLoader, to=SceneLoader)
         
-    def __getitem__(self, klass):
-        return lambda: self._injector.get(klass)
-    
-
 Dependency = Dependencybuillder()

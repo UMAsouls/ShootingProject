@@ -1,7 +1,7 @@
 import abc
 import pygame
 
-class IGameObject(pygame.sprite.DirtySprite,metaclass = abc.ABCMeta):
+class IObjectGroup(pygame.sprite.LayeredDirty,metaclass = abc.ABCMeta):
     @property
     @abc.abstractclassmethod
     def name(self) -> str:
@@ -13,9 +13,9 @@ class IGameObject(pygame.sprite.DirtySprite,metaclass = abc.ABCMeta):
         raise NotImplementedError()
     
     @abc.abstractclassmethod
-    def update(self) -> None:
+    def set_data(self, data: list):
         raise NotImplementedError()
     
     @abc.abstractclassmethod
-    def set_data(self, data) -> None:
+    def add(self, *sprites) -> None:
         raise NotImplementedError()

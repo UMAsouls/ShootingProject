@@ -4,11 +4,7 @@ import os
 
 from .TestObject import TestObject
 
-#pythonでは実行ディレクトリがroot
-#src内のものをimportするためカレントディレクトリ移動
-os.chdir("../..")
-
-from IGameObject import IGameObject
+from GameObject import IGameObject
 from GameObject import GameObject
 from Vector import Vector
 

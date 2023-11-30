@@ -1,10 +1,12 @@
-from typing import Any, Iterable, Union
+from typing import Any, Iterable, List, Union
 import pygame
 import injector
-from pygame.sprite import AbstractGroup
+import abc
 
-from IGameObject import IGameObject
-from IDrawer import IDrawer
+from . import IGameObject
+
+from GameObject import IDrawer as I0
+from GManager import IDrawer as I1
 
 class Singleton(object):
     def __new__(cls, *args, **kargs):
@@ -12,7 +14,7 @@ class Singleton(object):
             cls._instance = super(Singleton, cls).__new__(cls)
         return cls._instance
 
-class Drawer(IDrawer, Singleton):
+class Drawer(I0,I1, Singleton):
     
     def __init__(self, *sprites: Any, **kwargs: Any) -> None:
         if not hasattr(self, "_isinit"):
@@ -28,19 +30,23 @@ class Drawer(IDrawer, Singleton):
         rects = pygame.sprite.LayeredDirty.draw(self,screen)
         pygame.display.update(self.rect_list)
         return rects
+    
+    def sprites(self) -> list:
+        return super().sprites()
         
     def update(self):
         self.rect_list = []
         rects1 = []
         rects2 = []
-        for i in self.sprites():
+        obj: IGameObject = None
+        for obj in self.sprites():
             #コピーじゃないと参照が共有されて変更前との差分が作れない
-            rects1.append(i.rect.copy())
+            rects1.append(obj.rect.copy())
             
         pygame.sprite.LayeredDirty.update(self)
         
-        for i in self.sprites():
-            rects2.append(i.rect.copy())
+        for obj in self.sprites():
+            rects2.append(obj.rect.copy())
             
         for v,i in enumerate(rects1):
             i: pygame.Rect
@@ -49,18 +55,16 @@ class Drawer(IDrawer, Singleton):
                 self.rect_list.append(i)
                 self.rect_list.append(j)
                 
-class Dependencybuillder:
-    def __init__(self):
-        self._injector = injector.Injector(self.__class__.configure)
-    
+
+from DependencyMaker import DependencyMaker
+
+class Dependencybuillder(DependencyMaker):
     #injectorの初期化処理
     @classmethod
     def configure(cls, binder: injector.Binder):
         #
-        binder.bind(IDrawer, to=Drawer)
-        
-    def __getitem__(self, klass):
-        return lambda: self._injector.get(klass)
+        binder.bind(I0, to=Drawer)
+        binder.bind(I1, to=Drawer)
     
 
 Dependency = Dependencybuillder()

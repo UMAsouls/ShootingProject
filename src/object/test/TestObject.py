@@ -2,10 +2,6 @@ import pygame
 from pygame.locals import *
 import os
 
-#pythonでは実行ディレクトリがroot
-#src内のものをimportするためカレントディレクトリ移動
-os.chdir("../..")
-
 from GameObject import GameObject
 from Vector import Vector
 

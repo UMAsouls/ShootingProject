@@ -1,22 +1,26 @@
 import injector
 import os
 
-from IGameObject import IGameObject
-from IObjectGroup import IObjectGroup
-from IGroups import IGroups
+from Drawer import IGameObject as I0
+from GManager import IGameObject as I1
+from Groups import IGameObject as I2
+from ObjectGroup import IGameObject as I3
+from . import IGameObject as I4
+
+
+from .IObjectGroup import IObjectGroup
+from .IGroups import IGroups
 from Groups import Groups
-from IKey import IKey
+from .IKey import IKey
 from Key import Key
-from IDrawer import IDrawer
+from .IDrawer import IDrawer
 from Drawer import Drawer
-from ISceneLoader import ISceneLoader
+from .ISceneLoader import ISceneLoader
 from SceneLoader import SceneLoader
 
-os.chdir(os.path.dirname(os.path.abspath(__file__)))
-
 #objectから全てimport
+
 for i in os.listdir("object"):
-    os.chdir(os.path.dirname(os.path.abspath(__file__)))
     if i[0] == "_" or i[0] == ".": 
         continue
     exec(f"from object" + " import " + f"{i}")
@@ -34,7 +38,11 @@ class Dependencybuillder:
             binder.bind(IObjectGroup, to=eval(f"{path[0]}.{path[1]}.{path[1]}"))
         else:
             #IGameObjectにGameObjectを紐づけ
-            binder.bind(IGameObject, to=eval(f"{path[0]}.{path[1]}.{path[1]}")) 
+            binder.bind(I0, to=eval(f"{path[0]}.{path[1]}.{path[1]}")) 
+            binder.bind(I1, to=eval(f"{path[0]}.{path[1]}.{path[1]}")) 
+            binder.bind(I2, to=eval(f"{path[0]}.{path[1]}.{path[1]}")) 
+            binder.bind(I3, to=eval(f"{path[0]}.{path[1]}.{path[1]}")) 
+            binder.bind(I4, to=eval(f"{path[0]}.{path[1]}.{path[1]}")) 
         #
         binder.bind(IGroups, to=Groups)
         #
