@@ -10,8 +10,6 @@ from Groups import ISingleGroup as I0
 from GManager import ISingleGroup as I1
 from GameObject import ISingleGroup as I2
 
-print(I0,I1,I2)
-
 
 from DependencyMaker import DependencyMaker
 

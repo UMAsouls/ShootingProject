@@ -6,5 +6,6 @@ from GManager.ISceneLoader import *
 from GManager.IGameobject import *
 from GManager.IObjectGroup import *
 from GManager.ISingleGroup import *
+from GManager.IObjectSetter import *
 
 from GManager.GManager import *

@@ -11,6 +11,7 @@ from . import ISceneLoader
 from . import IObjectGroup
 from . import IGameObject
 from . import ISingleGroup
+from . import IObjectSetter
 
 from Vector import Vector
     
@@ -25,7 +26,7 @@ def get_parent_path(level):
 
 #ゲームの統括クラス
 class GManager:
-    def __init__(self, groups: IGroups, key: IKey, drawer: IDrawer, scene_loader: ISceneLoader) -> None:
+    def __init__(self, groups: IGroups, key: IKey, drawer: IDrawer, scene_loader: ISceneLoader, object_setter: IObjectSetter) -> None:
         pygame.init()
         #ゲーム画面
         self.screen = pygame.display.set_mode([1920,1080], FULLSCREEN)
@@ -33,6 +34,7 @@ class GManager:
         self.key: IKey = key
         self.drawer: IDrawer = drawer
         self.scene_loader : ISceneLoader = scene_loader
+        self.object_setter : IObjectSetter = object_setter
         
         self.set_data: function = None
         
@@ -75,7 +77,7 @@ class GManager:
     def MainLoop(self):
         self.scene_loader.end_scene
         while True:
-            self.set_data(self.scene_loader.scene_data, self.groups, self.drawer)
+            self.object_setter.set_data(self.scene_loader.scene_data)
             self.start()
             while True:
                 self.update()
