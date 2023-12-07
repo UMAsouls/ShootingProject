@@ -1,18 +1,9 @@
 import json
 import os
-from typing import List
 import injector
 
 from GManager import ISceneLoader as I0
 from GameObject import ISceneLoader as I1
-
-from DependencyMaker import DependencyMaker
-
-class Singleton(object):
-    def __new__(cls, *args, **kargs):
-        if not hasattr(cls, "_instance"):
-            cls._instance = super(Singleton, cls).__new__(cls)
-        return cls._instance
 
 #levelの分だけ上の階層のディレクトリの絶対パスを返す
 def get_parent_path(level):
@@ -23,14 +14,10 @@ def get_parent_path(level):
 
 PROJECT_PATH = os.path.dirname(os.getcwd())
 
-class SceneLoader(I0,I1,Singleton):
+@injector.singleton
+class SceneLoader(I0,I1):
     def __init__(self) -> None:
-        if hasattr(self, "_isinited"):
-            return
-        
-        self.isinited = True
-        
-        self._scene_data: List[str] = []
+        self._scene_data: list[str] = []
         self._end_scene : bool = False
         
     def scene_load(self, path: str) -> None:
@@ -55,11 +42,9 @@ class SceneLoader(I0,I1,Singleton):
         return tmp
     
 
-class Dependencybuillder(DependencyMaker):
-    
-    @classmethod
-    def configure(cls, binder: injector.Binder):
-        binder.bind(I0, to=SceneLoader)
-        binder.bind(I1, to=SceneLoader)
-        
-Dependency = Dependencybuillder()
+from DependencyConfig import Config
+
+configs = [
+    Config(I0, SceneLoader),
+    Config(I1, SceneLoader)
+]

@@ -12,6 +12,7 @@ from . import IGroups
 from . import IDrawer
 from . import IKey
 from . import ISceneLoader
+from . import IObjectSetter
 
 from Drawer import IGameObject as I0
 from GManager import IGameObject as I1
@@ -38,8 +39,15 @@ def get_parent_path(level):
 #全てのオブジェクトの基礎
 class GameObject(I0,I1,I2,I3,I4):
     #コンストラクタ
-    @injector.inject
-    def __init__(self, groups: IGroups, drawer: IDrawer, key: IKey, scene_loader: ISceneLoader):
+    def __init__(
+        self,
+        groups: IGroups,
+        drawer: IDrawer, 
+        key: IKey, 
+        scene_loader: ISceneLoader,
+        object_setter: IObjectSetter
+        ):
+        
         super().__init__()
         self.image :pygame.Surface = pygame.Surface([0,0])
         self.rect :pygame.Rect = self.image.get_rect()
@@ -57,6 +65,7 @@ class GameObject(I0,I1,I2,I3,I4):
         self._drawer :IDrawer = drawer
         self._key :IKey = key
         self._scene_loader :ISceneLoader = scene_loader
+        self._obj_setter :IObjectSetter = object_setter
         
         self.visible :bool = True
         self.layer :int = 5

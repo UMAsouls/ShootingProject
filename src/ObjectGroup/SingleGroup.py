@@ -28,13 +28,11 @@ class SingleGroup(I0,I1,I2,ObjectGroup):
         return self.main
     
     
-class Dependencybuillder(DependencyMaker):
-    
-    @classmethod
-    def configure(cls, binder: injector.Binder):
-        binder.bind(I0, to=SingleGroup)
-        binder.bind(I1, to=SingleGroup)
-        binder.bind(I2, to=SingleGroup)
-        
-Dependency = Dependencybuillder()
+from DependencyConfig import Config
+
+configs = [
+    Config(I0, SingleGroup),
+    Config(I1, SingleGroup),
+    Config(I2, SingleGroup)
+]
         

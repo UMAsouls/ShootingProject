@@ -1,29 +1,21 @@
-from typing import Any, Iterable, List, Union
+from typing import Any
 import pygame
 import injector
-import abc
 
 from . import IGameObject
 
 from GameObject import IDrawer as I0
 from GManager import IDrawer as I1
+from ObjectSetter import IDrawer as I2
 
-class Singleton(object):
-    def __new__(cls, *args, **kargs):
-        if not hasattr(cls, "_instance"):
-            cls._instance = super(Singleton, cls).__new__(cls)
-        return cls._instance
-
-class Drawer(I0,I1, Singleton):
-    
+@injector.singleton
+class Drawer(I0,I1,I2):
     def __init__(self, *sprites: Any, **kwargs: Any) -> None:
-        if not hasattr(self, "_isinit"):
-            super().__init__(*sprites, **kwargs)
-            self.rect_list = []
-            self._isinit = True
+        pygame.sprite.LayeredDirty.__init__(self,*sprites,**kwargs)
+        self.rect_list: list[pygame.Rect] = []
+            
             
     def init(self) -> None:
-        del self._isinit
         self.__init__()
 
     def draw(self, screen: pygame.Surface):
@@ -56,17 +48,12 @@ class Drawer(I0,I1, Singleton):
                 self.rect_list.append(j)
                 
 
-from DependencyMaker import DependencyMaker
+from DependencyConfig import Config
 
-class Dependencybuillder(DependencyMaker):
-    #injectorの初期化処理
-    @classmethod
-    def configure(cls, binder: injector.Binder):
-        #
-        binder.bind(I0, to=Drawer)
-        binder.bind(I1, to=Drawer)
-    
-
-Dependency = Dependencybuillder()
+configs = [
+    Config(I0, Drawer),
+    Config(I1, Drawer),
+    Config(I2, Drawer)
+]
             
         

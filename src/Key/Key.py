@@ -1,7 +1,6 @@
 import pygame
 from pygame.locals import *
 import injector
-import os
 
 from GameObject import IKey as I0
 from GManager import IKey as I1
@@ -9,17 +8,9 @@ from GManager import IKey as I1
 #全てのアルファベットの辞書
 key_dict = {pygame.key.name(K_a+i) : K_a+i for i in range(26)}
 
-class Singleton(object):
-    def __new__(cls, *args, **kargs):
-        if not hasattr(cls, "_instance"):
-            cls._instance = super(Singleton, cls).__new__(cls)
-        return cls._instance
-
-class Key(I0,I1, Singleton):
+@injector.singleton
+class Key(I0,I1):
     def __init__(self):
-        if hasattr(self, "_isinit"):
-            return
-        
         self._key = {}
         for k in key_dict.keys():
             self._key[k] = {
@@ -27,7 +18,6 @@ class Key(I0,I1, Singleton):
                 "repeat": False,
                 "up": False
                 }
-        self._isinit = True
 
     def get_key_down(self, key: str) -> bool:
         return self._key[key]["down"]
@@ -56,20 +46,10 @@ class Key(I0,I1, Singleton):
                 self._key[k]["up"] = True
                 self._key[k]["repeat"] = False
                 
-class Dependencybuillder:
-    def __init__(self):
-        self._injector = injector.Injector(self.__class__.configure)
-    
-    #injectorの初期化処理
-    @classmethod
-    def configure(cls, binder: injector.Binder):
-        #
-        binder.bind(I0, to=Key)
-        binder.bind(I1, to=Key)
-        
-    def __getitem__(self, klass):
-        return lambda: self._injector.get(klass)
-    
+from DependencyConfig import Config
 
-Dependency = Dependencybuillder()
+configs = [
+    Config(I0, Key),
+    Config(I1, Key)
+]
                         

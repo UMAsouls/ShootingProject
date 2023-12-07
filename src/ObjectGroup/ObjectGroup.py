@@ -13,8 +13,8 @@ class ObjectGroup(I0,I1,I2):
     def __init__(self) -> None:
         super().__init__()
         
-        self._name = ""
-        self._dict = {}
+        self._name: str = ""
+        self._dict: dict[str, int] = {}
         
     @property
     def name(self) -> str:
@@ -25,7 +25,7 @@ class ObjectGroup(I0,I1,I2):
         self._name = n
         
     @property
-    def dict(self) -> dict:
+    def dict(self) -> dict[str, int]:
         return self._dict
     
     def set_dict(self, n:str, v:int) -> None:
@@ -45,18 +45,10 @@ class ObjectGroup(I0,I1,I2):
                 
             self._dict[i.name] = len(self.sprites())
             
-class Dependencybuillder:
-    def __init__(self):
-        self._injector = injector.Injector(self.__class__.configure)
-    
-    #injectorの初期化処理
-    @classmethod
-    def configure(cls, binder: injector.Binder):
-        binder.bind(I0, to=ObjectGroup)
-        binder.bind(I1, to=ObjectGroup)
-        
-    def __getitem__(self, klass):
-        return lambda: self._injector.get(klass)
-    
+from DependencyConfig import Config
 
-Dependency = Dependencybuillder()
+configs = [
+    Config(I0, ObjectGroup),
+    Config(I1, ObjectGroup),
+    Config(I2, ObjectGroup)
+]

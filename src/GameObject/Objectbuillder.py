@@ -17,6 +17,8 @@ from .IDrawer import IDrawer
 from Drawer import Drawer
 from .ISceneLoader import ISceneLoader
 from SceneLoader import SceneLoader
+from .IObjectSetter import IObjectSetter
+from ObjectSetter import ObjectSetter
 
 #objectから全てimport
 
@@ -51,6 +53,8 @@ class Dependencybuillder:
         binder.bind(IDrawer, to=Drawer)
         #
         binder.bind(ISceneLoader, to=SceneLoader)
+        
+        binder.bind(IObjectSetter, to=IObjectSetter)
         
     def __getitem__(self, klass):
         return lambda: self._injector.get(klass)

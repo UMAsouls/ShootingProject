@@ -5,4 +5,6 @@ from GameObject.IObjectGroup import *
 from GameObject.ISceneLoader import *
 from GameObject.ISingleGroup import *
 from GameObject.IGameObject import *
+from GameObject.IObjectSetter import *
+
 from GameObject.GameObject import *
