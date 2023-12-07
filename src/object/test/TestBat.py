@@ -5,7 +5,7 @@ import os
 from GameObject import GameObject
 from Vector import Vector
 
-class Bat(GameObject):
+class TestBat(GameObject):
 
     def hit(self, obj):
         obj.vel
@@ -35,7 +35,3 @@ class Bat(GameObject):
             self.visible = True
         self._position += self.vel
             
-        pygame.sprite.collide_rect(self.position)
-
-        
-        
