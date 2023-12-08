@@ -42,7 +42,7 @@ class Drawer(I0,I1,I2):
         
         for obj in self.sprites():
             rects2.append(obj.rect.copy())
-            visibles1.append(obj.visible)
+            visibles2.append(obj.visible)
             
         for v in range(len(rects1)):
             if(v >= len(rects2)):
