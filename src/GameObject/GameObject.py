@@ -93,6 +93,14 @@ class GameObject(I0,I1,I2,I3,I4):
     def name(self, name) ->None:
         self._name = name
         
+    @property
+    def position(self) -> Vector:
+        return self._position
+    
+    @position.setter
+    def position(self, pos: Vector) -> None:
+        self._position = pos
+        
         
     @property
     def moving(self) -> bool:
