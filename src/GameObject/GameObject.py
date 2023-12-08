@@ -97,7 +97,7 @@ class GameObject(I0,I1,I2,I3,I4):
     def position(self) -> Vector:
         return self._position
     
-    @name.setter
+    @position.setter
     def position(self, pos: Vector) -> None:
         self._position = pos
         
