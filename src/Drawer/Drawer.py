@@ -30,24 +30,38 @@ class Drawer(I0,I1,I2):
         self.rect_list = []
         rects1 = []
         rects2 = []
+        visibles1: list[bool] = []
+        visibles2: list[bool] = []
         obj: IGameObject = None
         for obj in self.sprites():
             #コピーじゃないと参照が共有されて変更前との差分が作れない
             rects1.append(obj.rect.copy())
+            visibles1.append(obj.visible)
             
         pygame.sprite.LayeredDirty.update(self)
         
         for obj in self.sprites():
             rects2.append(obj.rect.copy())
+            visibles1.append(obj.visible)
             
-        for v,i in enumerate(rects1):
-            i: pygame.Rect
+        for v in range(len(rects1)):
+            if(v >= len(rects2)):
+                self.rect_list += rects1[v:]
+                break
+            
+            i: pygame.Rect = rects1[v]
             j: pygame.Rect = rects2[v]
             if(i.center != j.center or i.size != j.size):
                 self.rect_list.append(i)
                 self.rect_list.append(j)
                 
-
+            elif(visibles1[v] != visibles2[v]):
+                self.rect_list.append(i)
+                self.rect_list.append(j)
+                
+        if(len(rects1) <= len(rects2)):
+            self.rect_list += rects2[v:]
+            
 from DependencyConfig import Config
 
 configs = [
