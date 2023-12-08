@@ -49,10 +49,8 @@ class GameObject(I0,I1,I2,I3,I4):
         ):
         
         super().__init__()
-        self.image :pygame.Surface = pygame.Surface([0,0])
-        self.rect :pygame.Rect = self.image.get_rect()
         
-        self._position :Vector = None
+        self._position :Vector = Vector(0,0)
         self.__pivot :int = 0
         self._name :str = ""
         self._tag :str = ""
@@ -70,6 +68,8 @@ class GameObject(I0,I1,I2,I3,I4):
         self.visible :bool = True
         self.layer :int = 5
         self.dirty :int = 2
+        self.image :pygame.Surface = pygame.Surface([0,0])
+        self.rect :pygame.Rect = self.image.get_rect()
     
     #image,rectに違う型のものを入れない
     def __setattr__(self, __name: str, __value: Any) -> None:
@@ -81,6 +81,9 @@ class GameObject(I0,I1,I2,I3,I4):
             print("error: Do not set other value type to rect")
             pygame.quit()
             sys.exit()
+        elif __name == "rect":
+            super().__setattr__(__name, __value)
+            self.__rect_set()
         else:
             super().__setattr__(__name, __value)
             
@@ -124,13 +127,8 @@ class GameObject(I0,I1,I2,I3,I4):
     def on_collide(self, obj: "GameObject"):
         pass
     
-    #更新処理  
-    def update(self):
-        pygame.sprite.DirtySprite.update(self)
-        
-        if not self.visible:
-            return
-        
+    #positionをrectにセット
+    def __rect_set(self):
         if(self.__pivot == 0):
             self.rect.topleft = self._position.change2list()
         elif(self.__pivot == 1):
@@ -151,6 +149,15 @@ class GameObject(I0,I1,I2,I3,I4):
             self.rect.bottomright = self._position.change2list()
         else:
             pass
+    
+    #更新処理  
+    def update(self):
+        pygame.sprite.DirtySprite.update(self)
+        
+        if not self.visible:
+            return
+        
+        self.__rect_set()
         
         collides = pygame.sprite.spritecollide(self, self._drawer, False)
         
@@ -167,32 +174,3 @@ class GameObject(I0,I1,I2,I3,I4):
         self._position = Vector(data["pos"][0], data["pos"][1])
         self.layer = data["layer"]
 
-
-from DependencyMaker import DependencyMaker
-
-from Groups import Groups
-from Key import Key
-from Drawer import Drawer
-from SceneLoader import SceneLoader
-
-#DIコンテナ
-class Dependencybuillder(DependencyMaker):
-    #injectorの初期化処理
-    @classmethod
-    def configure(cls, binder: injector.Binder):
-        #IGameObjectにGameObjectを紐づけ
-        binder.bind(I0, to=GameObject)
-        binder.bind(I1, to=GameObject)
-        binder.bind(I2, to=GameObject)
-        binder.bind(I3, to=GameObject)
-        binder.bind(I4, to=GameObject)
-        #
-        binder.bind(IGroups, to=Groups)
-        #
-        binder.bind(IKey, to=Key)
-        #
-        binder.bind(IDrawer, to=Drawer)
-        #
-        binder.bind(ISceneLoader, to=SceneLoader)
-        
-Dependency = Dependencybuillder()
