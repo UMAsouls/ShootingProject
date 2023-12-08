@@ -6,7 +6,7 @@ import math
 from GameObject import GameObject
 from Vector import Vector
 
-class Bullet(GameObject):
+class TestBullet(GameObject):
     def set_data(self, data):
         super().set_data(data)
         
@@ -22,7 +22,6 @@ class Bullet(GameObject):
         
     def update(self):
         super().update()
-        self.set_velocity(10,70)
+        self.set_velocity(10,90)
 
         self._position += self.vel
-
