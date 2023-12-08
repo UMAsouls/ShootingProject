@@ -18,11 +18,12 @@ class Bullet(GameObject):
         self.vel = Vector(x,y)
         print(x,y)
     
+
     
         
     def update(self):
         super().update()
-        self.set_velocity(10,70)
+        self.set_velocity(10,40)
 
         self._position += self.vel
 
