@@ -20,8 +20,7 @@ class DependencyMaker:
     @classmethod
     def set(cls, configs: list[Config]) -> None:
         
-        for c in configs:
-            cls.__config_list.append(c)
+        cls.__config_list += configs
         
     def __getitem__(self, klass):
         return lambda: self._injector.get(klass)
