@@ -4,6 +4,9 @@ import injector
 
 from GManager import ISceneLoader as I0
 from GameObject import ISceneLoader as I1
+from ObjectSetter import ISceneLoader as I2
+
+from Singleton import Singleton
 
 #levelの分だけ上の階層のディレクトリの絶対パスを返す
 def get_parent_path(level):
@@ -15,10 +18,9 @@ def get_parent_path(level):
 PROJECT_PATH = os.path.dirname(os.getcwd())
 
 @injector.singleton
-class SceneLoader(I0,I1):
-    def __init__(self) -> None:
-        self._scene_data: list[str] = []
-        self._end_scene : bool = False
+class SceneLoader(I0,I1,I2, Singleton):
+    _scene_data: list[str] = []
+    _end_scene: bool = False
         
     def scene_load(self, path: str) -> None:
         path = PROJECT_PATH + "/json/" + path
@@ -45,6 +47,7 @@ class SceneLoader(I0,I1):
 from DependencyConfig import Config
 
 configs = [
-    Config(I0, SceneLoader),
-    Config(I1, SceneLoader)
+    Config(I0, lambda: SceneLoader.get_instance()),
+    Config(I1, lambda: SceneLoader.get_instance()),
+    Config(I2, lambda: SceneLoader.get_instance())
 ]

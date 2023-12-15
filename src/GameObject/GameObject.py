@@ -8,6 +8,7 @@ import injector
 from Vector import Vector
 
 from . import IObjectGroup
+from . import ISingleGroup
 from . import IGroups
 from . import IDrawer
 from . import IKey
@@ -19,6 +20,7 @@ from GManager import IGameObject as I1
 from Groups import IGameObject as I2
 from ObjectGroup import IGameObject as I3
 from . import IGameObject as I4
+from ObjectSetter import IGameObject as I5
 
 #ピボット（描写位置)
 PIVOTS = {
@@ -37,7 +39,7 @@ def get_parent_path(level):
     return path
 
 #全てのオブジェクトの基礎
-class GameObject(I0,I1,I2,I3,I4):
+class GameObject(I0,I1,I2,I3,I4,I5):
     #コンストラクタ
     def __init__(
         self,
@@ -54,6 +56,8 @@ class GameObject(I0,I1,I2,I3,I4):
         self.__pivot :int = 0
         self._name :str = ""
         self._tag :str = ""
+        
+        self._component: ISingleGroup = None
         
         self._moving: bool = True
         
@@ -103,6 +107,7 @@ class GameObject(I0,I1,I2,I3,I4):
     @position.setter
     def position(self, pos: Vector) -> None:
         self._position = pos
+        self.__rect_set()
         
         
     @property
@@ -112,6 +117,16 @@ class GameObject(I0,I1,I2,I3,I4):
     @moving.setter
     def moving(self, value) -> None:
         self._moving = value
+        
+    @property
+    def component(self) -> ISingleGroup:
+        return self._component
+    
+    @component.setter
+    def component(self, value: ISingleGroup) -> None:
+        self._component = value
+        if(self._component.main != self):
+            self._component.main = self
         
     #ここまでセッター、ゲッター
     
