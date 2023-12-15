@@ -19,13 +19,13 @@ class TestObject(GameObject):
         super().update()
         self.vel = Vector(0,0)
         
-        if(self._key.get_key_repeat("a")):
+        if(self._key.get_key_repeat("j")):
             self.vel += Vector(-1*self.speed,0)
-        if(self._key.get_key_repeat("d")):
+        if(self._key.get_key_repeat("l")):
             self.vel += Vector(self.speed,0)
-        if(self._key.get_key_repeat("w")):
+        if(self._key.get_key_repeat("i")):
             self.vel += Vector(0,-1*self.speed)
-        if(self._key.get_key_repeat("s")):
+        if(self._key.get_key_repeat("k")):
             self.vel += Vector(0,self.speed)
             
         self._position += self.vel

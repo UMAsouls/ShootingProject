@@ -18,9 +18,10 @@ class TestMachine(GameObject):
         self.speed = data["speed"]
 
 
-    def shoot(self):
+    def shoot(self , k):
         bullet: TestBullet  = self._obj_setter.make_obj(self.ball)
         bullet.position = self.position
+        bullet.mode = k
         self._drawer.add(bullet)
         
     def update(self):
@@ -36,8 +37,14 @@ class TestMachine(GameObject):
         if(self._key.get_key_repeat("s")):
             self.vel += Vector(0,self.speed)
             
-        if(self._key.get_key_down("q")):
-            self.shoot()
+        if(self._key.get_key_down("r")):
+            self.shoot(1)
+
+        if(self._key.get_key_down("t")):
+            self.shoot(2)
+
+        if(self._key.get_key_down("y")):
+            self.shoot(3)
             
         self._position += self.vel
             
