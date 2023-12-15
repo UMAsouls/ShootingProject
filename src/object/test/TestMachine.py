@@ -37,14 +37,17 @@ class TestMachine(GameObject):
         if(self._key.get_key_repeat("s")):
             self.vel += Vector(0,self.speed)
             
-        if(self._key.get_key_down("r")):
+        if(self._key.get_key_down("c")):
             self.shoot(1)
 
-        if(self._key.get_key_down("t")):
+        if(self._key.get_key_down("v")):
             self.shoot(2)
 
-        if(self._key.get_key_down("y")):
+        if(self._key.get_key_down("m")):
             self.shoot(3)
+
+        if(self._key.get_key_down("n")):
+            self.shoot(4)
             
         self._position += self.vel
             
