@@ -24,7 +24,7 @@ class TestBullet(GameObject):
         self.set_velocity(20, 90)
 
     def set_velocity_crave(self, gravity):
-        self.set_velocity(10,40)
+        self.set_velocity(13,40)
         vx0 = self.vel.x
         vy0 = self.vel.y
         
@@ -34,10 +34,11 @@ class TestBullet(GameObject):
         self.vel = Vector(dx_dt, dy_dt)
         self.t += 0.1
 
-
-
+    def reflect(self):
+        self.vel.x = -self.vel.x
+        self.vel.y = -self.vel.y
            
     def update(self):
         super().update()
-        self.set_velocity_crave()
+        self.set_velocity_crave(1.8)
         self._position += self.vel

@@ -1,10 +1,18 @@
 import abc
 
+from pygame.sprite import LayeredDirty
+
 from . import IGameObject
 
-from .IObjectGroup import IObjectGroup
-
-class ISingleGroup(IObjectGroup):
+class ISingleGroup(LayeredDirty):
+    @property
     @abc.abstractclassmethod
-    def get_main(self) -> IGameObject:
-        raise NotImplementedError
+    def main(self) -> IGameObject:
+        pass
+    
+    @main.setter
+    @abc.abstractclassmethod
+    def main(self, value: "ISingleGroup") -> None:
+        pass
+    
+    

@@ -5,6 +5,7 @@ from .IObjectGroup import IObjectGroup
 from .IGameobject import IGameObject
 
 class ISingleGroup(IObjectGroup):
+    @property
     @abc.abstractclassmethod
-    def set_main(self, obj: IGameObject) -> None:
+    def main(self, obj: IGameObject) -> None:
         raise NotImplementedError()
