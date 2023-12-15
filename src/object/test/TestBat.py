@@ -14,13 +14,13 @@ class TestBat(GameObject):
 
     def set_data(self, data):
         super().set_data(data)
-        self.visible = True
 
         if "speed" in data:
             self.speed = data["speed"]
 
         self.image = pygame.transform.scale(self.image,(180,120))
         self.rect = self.image.get_rect()
+        self.visible = False
 
     def on_collide(self, obj: GameObject):
         if isinstance(obj, TestBullet):
@@ -29,9 +29,9 @@ class TestBat(GameObject):
     def rotate_bat(self):
         angle = 0
         if angle <= 90:
-            self.image = pygame.transform.rotate((self.image),angle)
+            angle += 9
+            self.image = pygame.transform.rotate((self.image),5)
             self.rect = self.image.get_rect()
-            angle += 5
 
 
     def update(self):
