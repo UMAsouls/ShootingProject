@@ -26,6 +26,14 @@ class TestBat(GameObject):
         if isinstance(obj, TestBullet):
             self.hit(obj)
 
+    def rotate_bat(self):
+        angle = 0
+        if angle <= 90:
+            self.image = pygame.transform.rotate((self.image),angle)
+            self.rect = self.image.get_rect()
+            angle += 5
+
+
     def update(self):
         super().update()
 
@@ -38,5 +46,6 @@ class TestBat(GameObject):
 
         if ((self._key.get_key_repeat("b"))):
             self.visible = True
+            self.rotate_bat()
 
             
