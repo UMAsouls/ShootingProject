@@ -2,21 +2,28 @@ import abc
 from typing import Any
 
 
-class Singleton(object, metaclass = abc.ABCMeta):
+class Singleton:
+    _instance: "Singleton" = None
+    
+    #これが呼ばれるということはコンストラクタから呼ばれている
+    #エラーを吐く
     def __new__(cls, *args, **kwargs):
-        if not hasattr(cls, "_instance"):
-            cls._instance = super(Singleton, cls).__new__(cls)
-            
+        raise NotImplementedError("コンストラクタを呼ばないで")
+    
+    @classmethod
+    def __internal_new__(cls):
+        return super().__new__(cls)
+    
+    #こっちが実質的なコンストラクタ
+    @classmethod
+    def get_instance(cls):
+        if cls._instance == None:
+            cls._instance = cls.__internal_new__()
+            cls.inited: bool = False
+        
         return cls._instance
     
-    @abc.abstractclassmethod
-    def init(self, *args, **kwargs) -> None:
-        pass
     
-    def __init__(self, *args, **kwargs) -> bool:
-        if not hasattr(self, "__isinited"):
-            self.init(*args, **kwargs)
-            self.__isinited = True
         
             
             

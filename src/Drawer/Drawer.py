@@ -8,15 +8,26 @@ from GameObject import IDrawer as I0
 from GManager import IDrawer as I1
 from ObjectSetter import IDrawer as I2
 
+from Singleton import Singleton
+
 @injector.singleton
-class Drawer(I0,I1,I2):
-    def __init__(self, *sprites: Any, **kwargs: Any) -> None:
-        pygame.sprite.LayeredDirty.__init__(self,*sprites,**kwargs)
-        self.rect_list: list[pygame.Rect] = []
+class Drawer(I0,I1,I2,Singleton):
+    rect_list: list[pygame.Rect] = []
+    
+    @classmethod    
+    def get_instance(cls) -> "Drawer":
+        if cls._instance == None:
+            cls._instance = cls.__internal_new__()
+            cls.inited: bool = False
+            pygame.sprite.LayeredDirty.__init__(cls._instance)
+        
+        return cls._instance
+        
             
             
     def init(self) -> None:
-        self.__init__()
+        self.rect_list = []
+        pygame.sprite.LayeredDirty.__init__(self)
 
     def draw(self, screen: pygame.Surface):
         rects = pygame.sprite.LayeredDirty.draw(self,screen)
@@ -65,9 +76,9 @@ class Drawer(I0,I1,I2):
 from DependencyConfig import Config
 
 configs = [
-    Config(I0, Drawer),
-    Config(I1, Drawer),
-    Config(I2, Drawer)
+    Config(I0, lambda: Drawer.get_instance()),
+    Config(I1, lambda: Drawer.get_instance()),
+    Config(I2, lambda: Drawer.get_instance())
 ]
             
         
