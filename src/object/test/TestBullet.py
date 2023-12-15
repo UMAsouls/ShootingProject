@@ -39,5 +39,5 @@ class TestBullet(GameObject):
            
     def update(self):
         super().update()
-        self.set_velocity_crave()
+        self.set_velocity_crave(9.8)
         self._position += self.vel
