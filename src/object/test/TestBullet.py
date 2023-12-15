@@ -34,8 +34,9 @@ class TestBullet(GameObject):
         self.vel = Vector(dx_dt, dy_dt)
         self.t += 0.1
 
-
-
+    def reflect(self):
+        self.vel.x = -self.vel.x
+        self.vel.y = -self.vel.y
            
     def update(self):
         super().update()
