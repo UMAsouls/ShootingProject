@@ -10,7 +10,7 @@ class Vector:
         self.y = y
         
     #コピーコンストラクタ
-    def __copy__(self):
+    def __copy__(self) -> "Vector":
         return Vector(self.x, self.y)
     
     
@@ -23,13 +23,13 @@ class Vector:
             self.__num[1] = __value
     
     #加算オペレーター
-    def __add__(self, other):
+    def __add__(self, other: "Vector") -> "Vector":
         n = self.__num + other.getNum()
         
         return Vector(n[0], n[1])
     
     #減算オペレーター
-    def __sub__(self, other):
+    def __sub__(self, other: "Vector") -> "Vector":
         n = self.__num - other.getNum()
         
         return Vector(n[0], n[1])
@@ -39,11 +39,11 @@ class Vector:
         return "[" + str(self.x) + ", " + str(self.y) + "]"
     
     #内部の値をnp.arrayとして返す
-    def getNum(self) :
+    def getNum(self) -> np.ndarray:
         return np.array([self.x, self.y])
     
     #内積
-    def dot(self, other) -> float:
+    def dot(self, other: "Vector") -> float:
         return np.dot(self.__num, other.getNum())
     
     #大きさ
@@ -55,11 +55,11 @@ class Vector:
         return np.degrees(np.arcsin(self.x/self.mag()))
     
     #正規化
-    def normalize(self):
+    def normalize(self) -> "Vector":
         ang = np.radians(self.angle())
         return Vector(np.sin(ang), np.cos(ang))
     
-    def change2list(self):
+    def change2list(self) -> list[int]:
         return [self.x, self.y]
         
     

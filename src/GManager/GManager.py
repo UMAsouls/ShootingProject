@@ -29,7 +29,7 @@ class GManager:
     def __init__(self, groups: IGroups, key: IKey, drawer: IDrawer, scene_loader: ISceneLoader, object_setter: IObjectSetter) -> None:
         pygame.init()
         #ゲーム画面
-        self.screen = pygame.display.set_mode([1920,1080], FULLSCREEN)
+        self.screen = pygame.display.set_mode([1920,1080], HWSURFACE)
         self.groups: IGroups = groups
         self.key: IKey = key
         self.drawer: IDrawer = drawer
