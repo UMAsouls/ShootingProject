@@ -18,16 +18,16 @@ class TestBullet(GameObject):
 
     def set_velocity(self, speed, angle):
         x = speed * math.cos(math.radians(angle))
-        y = speed * math.sin(math.radians(angle))
+        y = speed * -1*math.sin(math.radians(angle))
         self.vel = Vector(x,y)
     
     #ストレート       
     def set_velocity_street(self):
-        self.set_velocity(20, 90)
+        self.set_velocity(20, -90)
 
     #カーブ
     def set_velocity_crave(self, gravity):
-        self.set_velocity(13,40)
+        self.set_velocity(13,-40)
         vx0 = self.vel.x
         vy0 = self.vel.y
         
@@ -39,7 +39,7 @@ class TestBullet(GameObject):
 
     #逆カーブ
     def set_velocity_uncrave(self, gravity):
-        self.set_velocity(13,130)
+        self.set_velocity(13,-130)
         vx0 = self.vel.x
         vy0 = self.vel.y
         
@@ -51,7 +51,7 @@ class TestBullet(GameObject):
 
     #行って戻って
     def set_velocity_goback(self, gravity):
-        self.set_velocity(5,270)
+        self.set_velocity(5,-270)
         vx0 = self.vel.x
         vy0 = self.vel.y
 
@@ -62,9 +62,9 @@ class TestBullet(GameObject):
         self.t += 0.1
 
     #反射
-    def reflect(self):
-        self.vel.x = -self.vel.x
-        self.vel.y = -self.vel.y
+    def reflect(self, angle_ref):
+        self.vel.x = self.vel.x * math.cos(math.radians(angle_ref * 2)) - self.vel.y  * -1 * math.sin(math.radians(angle_ref * 2))
+        self.vel.y = self.vel.x * -1 * math.sin(math.radians(angle_ref * 2)) - self.vel.y * math.cos(math.radians(angle_ref * 2))
            
     def update(self):
         super().update()
