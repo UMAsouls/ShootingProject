@@ -51,7 +51,7 @@ class TestBullet(GameObject):
 
     #行って戻って
     def set_velocity_goback(self, gravity):
-        self.set_velocity(0,-40)
+        self.set_velocity(5,270)
         vx0 = self.vel.x
         vy0 = self.vel.y
 
