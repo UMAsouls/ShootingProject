@@ -5,15 +5,24 @@ import os
 from GameObject import GameObject
 from Vector import Vector
 
+from .TestBullet import TestBullet
+
 class TestObject(GameObject):
     
     def set_data(self, data):
         super().set_data(data)
         
         self.vel = Vector(0,0)
-        
-        if "speed" in data:
-            self.speed = data["speed"]
+
+        self.ball = data["ball_data"]
+        self.speed = data["speed"]
+
+
+    def shoot(self , k):
+        bullet: TestBullet  = self._obj_setter.make_obj(self.ball)
+        bullet.position = self.position
+        bullet.mode = k
+        self._drawer.add(bullet)
        
     def update(self):
         super().update()
@@ -28,5 +37,18 @@ class TestObject(GameObject):
         if(self._key.get_key_repeat("k")):
             self.vel += Vector(0,self.speed)
             
-        self._position += self.vel
+            
+        if(self._key.get_key_down("c")):
+            self.shoot(1)
+
+        if(self._key.get_key_down("v")):
+            self.shoot(2)
+
+        if(self._key.get_key_down("m")):
+            self.shoot(3)
+
+        if(self._key.get_key_down("n")):
+            self.shoot(4)
+            
+        self.position += self.vel
             
