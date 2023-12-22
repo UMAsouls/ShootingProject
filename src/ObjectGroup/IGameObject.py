@@ -2,6 +2,7 @@ import pygame
 import abc
 
 from .ISingleGroup import ISingleGroup
+from Vector import Vector
 
 class IGameObject(pygame.sprite.DirtySprite, metaclass = abc.ABCMeta):
     @property
@@ -17,4 +18,9 @@ class IGameObject(pygame.sprite.DirtySprite, metaclass = abc.ABCMeta):
     @component.setter
     @abc.abstractclassmethod
     def component(self, component: ISingleGroup) -> None:
+        pass
+    
+    @property
+    @abc.abstractclassmethod
+    def position(self) -> Vector:
         pass

@@ -1,7 +1,7 @@
 import pygame
 from pygame import locals
 import os
-import copy
+import math
 
 from GameObject import GameObject
 from .TestBullet import TestBullet
@@ -18,16 +18,22 @@ class TestBat(GameObject):
         if "speed" in data:
             self.speed = data["speed"]
 
-        self.image = pygame.transform.scale(self.image,(100,12))
-        self.rect = self.image.get_rect()
+        self.size = [180,180]
+        self.rect = self.image.get_rect(center = self.rect.center)
+        self.copy = self.image.copy()
         self.visible = False
-
+        
+        self.change_pivot("center")
+        self.radius = 150
+        self.position = [100,50]
+        
     def on_collide(self, obj: GameObject):
         if isinstance(obj, TestBullet):
             self.hit(obj)
 
     def rotate_bat(self):
-        pass
+        self.angle += 25
+
 
     def update(self):
         super().update()
@@ -36,11 +42,19 @@ class TestBat(GameObject):
 
         obj: GameObject = self._groups.get_single_by_name("test")
 
-        self.position = copy.copy(obj.position)
-        self.position.y += 50
+        #self.position = obj.rect.center
 
         if ((self._key.get_key_repeat("b"))):
             self.visible = True
-            #self.rotate_bat()
+            self.rotate_bat()
+            
+        if self._key.get_key_up("b"):
+            self.visible = False
+        
+        """sub = Vector(
+            self.radius*math.cos(math.radians(self.angle)),
+            -1*self.radius*math.sin(math.radians(self.angle))
+        )
+        self.position += sub"""
 
             

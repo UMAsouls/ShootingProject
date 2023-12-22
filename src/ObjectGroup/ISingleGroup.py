@@ -1,5 +1,7 @@
 import pygame
 import abc
 
-class ISingleGroup(pygame.sprite.LayeredDirty, metaclass = abc.ABCMeta):
-    pass
+class ISingleGroup(metaclass = abc.ABCMeta):
+    @abc.abstractclassmethod
+    def position_set(self) -> None:
+        pass

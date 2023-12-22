@@ -27,7 +27,7 @@ class ObjectSetter(I0, I1, I2, Singleton):
         self._drawer: IDrawer = drawer
         
     def make_obj(self, data: dict) -> IGameObject:
-        return self._make_obj_tmp(data, self._groups)
+        return self._make_obj_tmp(data)
         
     def add_obj(self, data: dict) -> None:
         self._add_obj_tmp(data, self._groups, self._drawer)
