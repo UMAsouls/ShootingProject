@@ -26,7 +26,7 @@ class TestObject(GameObject):
         self._drawer.add(bullet)
 
     def on_collide(self, obj: GameObject):
-        isinstance()
+        pass
        
     def update(self):
         super().update()

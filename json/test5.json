@@ -24,7 +24,6 @@
             ]
         },
         {"use": "test","class": "TestBG", "pos" : [0,0], "name" : "bg", "tag": "bg", "path" : "bg_sample.png", "layer":0},
-        {"use": "test","class": "TestGoal", "pos" : [500,30], "name" : "goal", "tag": "goal", "path" : "bg_sample3.png", "layer":0},
         {
             "use": "test",
             "class": "TestObject", 
@@ -46,8 +45,8 @@
             "kid": [
                 {"use": "test", "class": "TestBat", "pos":[0,0], "name":"bat","tag":"Bat","path":"bat.png","layer":6, "speed":7}
             ]
-        }
-        
+        },
+        {"use": "test","class": "TestBase", "pos" : [200,400], "name" : "goal", "tag": "goal", "path" : "HP_sample.png", "layer":5}
     ],
     "grp":
     [
