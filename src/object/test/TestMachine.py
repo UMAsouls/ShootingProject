@@ -17,6 +17,8 @@ class TestMachine(GameObject):
 
         self.ball = data["ball_data"]
         self.speed = data["speed"]
+        
+        self.change_pivot("center")
 
 
     def shoot(self , k):
