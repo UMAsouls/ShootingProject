@@ -47,7 +47,8 @@ class GameObject(I0,I1,I2,I3,I4,I5):
         drawer: IDrawer, 
         key: IKey, 
         scene_loader: ISceneLoader,
-        object_setter: IObjectSetter
+        object_setter: IObjectSetter,
+        component: ISingleGroup
         ):
         
         super().__init__()
@@ -61,7 +62,7 @@ class GameObject(I0,I1,I2,I3,I4,I5):
         
         self._base_image :pygame.Surface = pygame.Surface([0,0])
         
-        self._component: ISingleGroup = None
+        self._component = component
         
         self._moving: bool = True
         
@@ -116,7 +117,10 @@ class GameObject(I0,I1,I2,I3,I4,I5):
             pos = pos.change2list()
             
         self._position.x = pos[0]
-        self._position.y = pos[1]    
+        self._position.y = pos[1]
+        
+        #componentのpositionもセットし直し
+        self.component.position_set()
         
         self.__rect_set()
         
@@ -134,7 +138,7 @@ class GameObject(I0,I1,I2,I3,I4,I5):
     
     @component.setter
     def component(self, value: ISingleGroup) -> None:
-        self._component = value
+        self._component: ISingleGroup = value
         if(self._component.main != self):
             self._component.main = self
             
@@ -194,24 +198,28 @@ class GameObject(I0,I1,I2,I3,I4,I5):
     #positionをrectにセット
     def __rect_set(self):
         size = self.rect.size
+        pos = self._position
+        if(self.component.root != self.component):
+            pos += self.component.parent.position
+            
         if(self.__pivot == 0):
-            self.rect.topleft = self._position.change2list()
+            self.rect.topleft = pos.change2list()
         elif(self.__pivot == 1):
-            self.rect.midtop = self._position.change2list()
+            self.rect.midtop = pos.change2list()
         elif(self.__pivot == 2):
-            self.rect.topright = self._position.change2list()
+            self.rect.topright = pos.change2list()
         elif(self.__pivot == 3):
-            self.rect.midleft = self._position.change2list()
+            self.rect.midleft = pos.change2list()
         elif(self.__pivot == 4):
-            self.rect.center = self._position.change2list()
+            self.rect.center = pos.change2list()
         elif(self.__pivot == 5):
-            self.rect.midright = self._position.change2list()
+            self.rect.midright = pos.change2list()
         elif(self.__pivot == 6):
-            self.rect.bottomleft = self._position.change2list()
+            self.rect.bottomleft = pos.change2list()
         elif(self.__pivot == 7):
-            self.rect.midbottom = self._position.change2list()
+            self.rect.midbottom = pos.change2list()
         elif(self.__pivot == 8):
-            self.rect.bottomright = self._position.change2list()
+            self.rect.bottomright = pos.change2list()
         else:
             pass
         
@@ -234,13 +242,20 @@ class GameObject(I0,I1,I2,I3,I4,I5):
             
     #jsonデータのセット       
     def set_data(self, data):
-        self._base_image = pygame.image.load(PROJECT_PATH + f"/image/{data['path']}")
-        self.image = self._base_image.subsurface(self._base_image.get_rect())
-        self.rect = self.image.get_rect()
-        self.__size = Vector(self.rect.width,self.rect.height)
-        self.__angle = 0
         self.name = data["name"]
         self.tag = data["tag"]
         self._position = Vector(data["pos"][0], data["pos"][1])
         self.layer = data["layer"]
+        self._base_image = pygame.image.load(PROJECT_PATH + f"/image/{data['path']}")
+        self.image = self._base_image.subsurface(self._base_image.get_rect())
+        self.rect = self.image.get_rect()
+        
+        self.component = self._component
+        
+        self.__size = Vector(self.rect.width,self.rect.height)
+        self.__angle = 0
+        
+        self.__rect_set()
+        
+        
 

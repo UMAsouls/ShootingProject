@@ -32,7 +32,7 @@ def main():
         object_setter=Dependency[IObjectSetter]()
         )
     #gm.set_func(set_data)
-    gm.scene_loader.scene_load("test4.json")
+    gm.scene_loader.scene_load("test5.json")
     gm.MainLoop()
 
 

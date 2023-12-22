@@ -3,7 +3,7 @@ import abc
 
 from . import IGameObject
 
-class ISingleGroup(pygame.sprite.LayeredDirty):
+class ISingleGroup(metaclass = abc.ABCMeta):
     @property
     @abc.abstractclassmethod
     def name(self) -> str:

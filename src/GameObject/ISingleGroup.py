@@ -1,10 +1,11 @@
 import abc
 
-from pygame.sprite import LayeredDirty
+from pygame.sprite import Group
 
 from . import IGameObject
+from Vector import Vector
 
-class ISingleGroup(LayeredDirty):
+class ISingleGroup(metaclass = abc.ABCMeta):
     @property
     @abc.abstractclassmethod
     def main(self) -> IGameObject:
@@ -13,6 +14,25 @@ class ISingleGroup(LayeredDirty):
     @main.setter
     @abc.abstractclassmethod
     def main(self, value: "ISingleGroup") -> None:
+        pass
+    
+    @property
+    @abc.abstractclassmethod
+    def parent(self) -> "ISingleGroup":
+        pass
+    
+    @property
+    @abc.abstractclassmethod
+    def root(self) -> "ISingleGroup":
+        pass
+    
+    @property
+    @abc.abstractclassmethod
+    def position(self) -> Vector:
+        pass
+    
+    @abc.abstractclassmethod
+    def position_set(self) -> None:
         pass
     
     

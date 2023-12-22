@@ -25,6 +25,7 @@ class TestBat(GameObject):
         
         self.change_pivot("center")
         self.radius = 150
+        self.position = [100,50]
         
     def on_collide(self, obj: GameObject):
         if isinstance(obj, TestBullet):
@@ -41,8 +42,7 @@ class TestBat(GameObject):
 
         obj: GameObject = self._groups.get_single_by_name("test")
 
-        self.position = obj.rect.center
-        self.position.x += 50
+        #self.position = obj.rect.center
 
         if ((self._key.get_key_repeat("b"))):
             self.visible = True

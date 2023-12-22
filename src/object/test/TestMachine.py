@@ -49,5 +49,5 @@ class TestMachine(GameObject):
         if(self._key.get_key_down("n")):
             self.shoot(4)
             
-        self._position += self.vel
+        self.position += self.vel
             

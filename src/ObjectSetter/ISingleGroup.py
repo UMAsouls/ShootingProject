@@ -1,16 +1,20 @@
 import pygame
 import abc
 
-from .IGameObject import IGameObject
-
-class ISingleGroup(pygame.sprite.LayeredDirty, metaclass = abc.ABCMeta):
+class ISingleGroup(metaclass = abc.ABCMeta):
     
     @property
     @abc.abstractclassmethod
-    def main(self, obj: IGameObject) -> None:
+    def parent(self) -> "ISingleGroup":
         pass
     
-    @property
+    @parent.setter
     @abc.abstractclassmethod
     def parent(self, component: "ISingleGroup") -> None:
         pass
+    
+    @property
+    @abc.abstractclassmethod
+    def kids(self) -> list:
+        pass
+    
