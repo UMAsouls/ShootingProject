@@ -16,6 +16,7 @@ class TestObject(GameObject):
 
         self.ball = data["ball_data"]
         self.speed = data["speed"]
+        self.hitpoint = 100
 
 
     def shoot(self , k):
@@ -23,6 +24,9 @@ class TestObject(GameObject):
         bullet.position = self.position
         bullet.mode = k
         self._drawer.add(bullet)
+
+    def on_collide(self, obj: GameObject):
+        isinstance()
        
     def update(self):
         super().update()
