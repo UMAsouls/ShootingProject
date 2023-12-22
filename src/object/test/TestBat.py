@@ -18,7 +18,7 @@ class TestBat(GameObject):
         if "speed" in data:
             self.speed = data["speed"]
 
-        self.image = pygame.transform.scale(self.image,(180,120))
+        self.image = pygame.transform.scale(self.image,(100,12))
         self.rect = self.image.get_rect()
         self.visible = False
 
@@ -27,12 +27,7 @@ class TestBat(GameObject):
             self.hit(obj)
 
     def rotate_bat(self):
-        angle = 0
-        if angle <= 90:
-            angle += 9
-            self.image = pygame.transform.rotate((self.image),5)
-            self.rect = self.image.get_rect()
-
+        pass
 
     def update(self):
         super().update()
@@ -42,10 +37,10 @@ class TestBat(GameObject):
         obj: GameObject = self._groups.get_single_by_name("test")
 
         self.position = copy.copy(obj.position)
-        self.position.x += 50
+        self.position.y += 50
 
         if ((self._key.get_key_repeat("b"))):
             self.visible = True
-            self.rotate_bat()
+            #self.rotate_bat()
 
             
