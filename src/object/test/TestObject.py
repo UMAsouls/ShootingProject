@@ -24,6 +24,9 @@ class TestObject(GameObject):
         bullet.position = self.position
         bullet.mode = k
         self._drawer.add(bullet)
+
+    def on_collide(self, obj: GameObject):
+        pass
        
     def update(self):
         super().update()

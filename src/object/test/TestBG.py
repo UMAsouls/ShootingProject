@@ -19,7 +19,7 @@ class TestBG(GameObject):
             
         else:
             self.time -= 1
-        test_sp : GameObject = self._groups.get_single_by_name("test")
+        #test_sp : GameObject = self._groups.get_single_by_name("test")
         
         #print(test_sp.name)
     
