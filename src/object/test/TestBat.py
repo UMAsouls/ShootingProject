@@ -25,14 +25,16 @@ class TestBat(GameObject):
         
         self.change_pivot("center")
         self.radius = 150
-        self.position = [100,50]
+        self.position = [100,50]    #親positionとの相対位置
         
     def on_collide(self, obj: GameObject):
         if isinstance(obj, TestBullet):
             self.hit(obj)
 
     def rotate_bat(self):
-        self.angle += 25
+        self.angle += 5
+        if self.angle == 180:
+            self.angle = 0
 
 
     def update(self):
@@ -51,10 +53,9 @@ class TestBat(GameObject):
         if self._key.get_key_up("b"):
             self.visible = False
         
-        """sub = Vector(
+        self.position = Vector(
             self.radius*math.cos(math.radians(self.angle)),
             -1*self.radius*math.sin(math.radians(self.angle))
         )
-        self.position += sub"""
 
             
