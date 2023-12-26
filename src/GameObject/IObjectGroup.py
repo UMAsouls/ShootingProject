@@ -15,7 +15,3 @@ class IObjectGroup(pygame.sprite.LayeredDirty,metaclass = abc.ABCMeta):
     @abc.abstractclassmethod
     def set_data(self, data: list):
         raise NotImplementedError()
-    
-    @abc.abstractclassmethod
-    def add(self, *sprites) -> None:
-        raise NotImplementedError()

@@ -14,8 +14,8 @@ from Singleton import Singleton
 
 @injector.singleton
 class Groups(I0,I1,I2,Singleton):
-    _groups = {}
-    _singles = {}
+    _groups: dict[str, IObjectGroup] = {}
+    _singles: dict[str, ISingleGroup] = {}
     _types = {}  
     __groups_same_names: dict[str, int] = {}
     __singles_same_names: dict[str, int] = {}
@@ -29,11 +29,11 @@ class Groups(I0,I1,I2,Singleton):
         return self._groups[name]
     
     def add_group(self, group: IObjectGroup) -> None:
-        if group.name in self._groups:
-            print(self._groups, group.name)
-            print("\nERROR: Don't put same name group\n")
-            pygame.quit()
-            sys.exit()
+        if group.name in self.__groups_same_names:
+            self.__groups_same_names[group.name] += 1
+            group.name += f"({self.__groups_same_names[group.name]})"
+        else:
+            self.__groups_same_names[group.name] = 0
         
         self._groups[group.name] = group
             
@@ -56,6 +56,10 @@ class Groups(I0,I1,I2,Singleton):
     
     def get_group_by_type(self) -> IObjectGroup:
         return
+    
+    def update(self):
+        for i in self._groups.values():
+            i.update()
     
 from DependencyConfig import Config
 

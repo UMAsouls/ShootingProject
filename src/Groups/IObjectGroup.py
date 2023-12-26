@@ -7,3 +7,7 @@ class IObjectGroup(pygame.sprite.LayeredDirty, metaclass = abc.ABCMeta):
     def name(self) -> str:
         raise NotImplementedError()
     
+    @abc.abstractclassmethod
+    def update(self) -> None:
+        pass
+    

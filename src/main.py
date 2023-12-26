@@ -1,5 +1,6 @@
 import os
 import pygame
+from pygame.locals import *
 from typing import Any
 
 os.chdir(os.path.dirname(os.path.abspath(__file__)))

@@ -1,22 +1,45 @@
+from typing import List
 import pygame
 import sys
 import injector
 import os
 
 from .IGameObject import IGameObject
+from .IDrawer import IDrawer
+from .IGroups import IGroups
+from .IKey import IKey
+from .IObjectSetter import IObjectSetter
+from .ISceneLoader import ISceneLoader
 
 from Groups import IObjectGroup as I0
 from GameObject import IObjectGroup as I1
 from GManager import IObjectGroup as I2
 from ObjectSetter import IObjectGroup as I3
+from .IObjectGroup import IObjectGroup as I4
 
-class ObjectGroup(I0,I1,I2,I3):
-    def __init__(self) -> None:
+#GameObjectをまとめて管理できるオブジェクト
+#色々なメタ的な動作をさせられる
+class ObjectGroup(I0,I1,I2,I3,I4):
+    def __init__(
+        self,
+        groups: IGroups,
+        drawer: IDrawer, 
+        key: IKey, 
+        scene_loader: ISceneLoader,
+        object_setter: IObjectSetter
+        ) -> None:
         super().__init__()
         
+        self._groups = groups
+        self._drawer = drawer
+        self._key = key
+        self._scene_loader = scene_loader
+        self._obj_setter = object_setter
+        
         self._name: str = ""
-        self._dict: dict[str, int] = {}
-        self._same_names: dict[str, int] = {}
+        
+        self.name_dict: dict[str, int] = {}
+        self.type_dict: dict[str, list[int]] = {}
         
     @property
     def name(self) -> str:
@@ -26,30 +49,22 @@ class ObjectGroup(I0,I1,I2,I3):
     def name(self, n:str) -> None:
         self._name = n
         
-    def get_obj(self, name: str) -> IGameObject:
-        return self.sprites()[self._dict[name]]
+    def get_objects(self, name: str) -> GeneratorExit:
+        for i in self.sprites():
+            if(i.name == name):
+                yield i
+                
+    def sprites(self) -> list[IGameObject]:
+        return super().sprites()
         
         
     def set_data(self, data: dict) -> None:
         self._name = data["name"]
-    
-    def add(self, *sprites: IGameObject):
-        for i in sprites:
-            if i.name in self._same_names:
-                self._same_names[i.name] += 1
-                i.name += f"({self._same_names[i.name]})"
-            else:
-                self._same_names[i.name] = 0
+        
+        for i in data["objects"]:
+            obj = self._groups.get_single_by_name(i)
+            self.add(obj)
             
-            self._dict[i.name] = len(self.sprites())    
-            pygame.sprite.LayeredDirty.add(self,i)
-            
-            
-from DependencyConfig import Config
-
-configs = [
-    Config(I0, ObjectGroup),
-    Config(I1, ObjectGroup),
-    Config(I2, ObjectGroup),
-    Config(I3, ObjectGroup)
-]
+        
+    def update(self):
+        pass

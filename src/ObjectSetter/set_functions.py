@@ -13,6 +13,7 @@ from .ISceneLoader import ISceneLoader
 from .IObjectSetter import IObjectSetter
 
 from GameObject import GameObject
+from ObjectGroup import ObjectGroup
 
 for i in os.listdir("object"):
     if i[0] == "_" or i[0] == ".": 
@@ -32,7 +33,7 @@ def make_obj_from_data(data: dict[str, Any]) -> IGameObject:
         else:
             obj_type = eval(f"{data['use']}.{data['class']}.{data['class']}")
             
-        single = Dependency[ISingleGroup]()
+        single: ISingleGroup = Dependency[ISingleGroup]()
             
         obj = obj_type(
             Dependency[IGroups](),
@@ -60,9 +61,33 @@ def add_obj(data: dict, groups: IGroups, drawer: IDrawer):
     drawer.add(obj)
     for i in obj.component.kids:
         drawer.add(i)
+        
+        
+        
+def make_grp_from_data(data: dict[str,Any]):
     
+    grp_type: type[IObjectGroup]
+    
+    if(data["class"] == ""):
+        grp_type = ObjectGroup
+    else:
+        print(data["class"])
+        grp_type = eval(f"{data['use']}.{data['class']}.{data['class']}")
+        
+    grp = grp_type(
+        Dependency[IGroups](),
+        Dependency[IDrawer](),
+        Dependency[IKey](),
+        Dependency[ISceneLoader](),
+        Dependency[IObjectSetter]()
+    )
+    
+    grp.set_data(data)
+    
+    return grp
 
 #グループを追加する処理
 #後々作る
 def add_group(data: dict, groups: IGroups, drawer: IDrawer):
-    pass
+    grp = make_grp_from_data(data)
+    groups.add_group(grp)

@@ -8,3 +8,4 @@ from GameObject.IGameObject import *
 from GameObject.IObjectSetter import *
 
 from GameObject.GameObject import *
+from GameObject.TextObject import TextObject

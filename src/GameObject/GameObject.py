@@ -51,7 +51,7 @@ class GameObject(I0,I1,I2,I3,I4,I5):
         component: ISingleGroup
         ):
         
-        super().__init__()
+        super(GameObject,self).__init__()
         
         self._position :Vector = Vector(0,0)
         self.__angle :int = 0
@@ -60,11 +60,11 @@ class GameObject(I0,I1,I2,I3,I4,I5):
         self._name :str = ""
         self._tag :str = ""
         
-        self._base_image :pygame.Surface = pygame.Surface([0,0])
+        self.__base_image :pygame.Surface = pygame.Surface([0,0])
         
         self._component = component
         
-        self._moving: bool = True
+        self._changed: bool = False
         
         #シングルトン
         #様々な要素にアクセス可能
@@ -75,27 +75,36 @@ class GameObject(I0,I1,I2,I3,I4,I5):
         self._obj_setter :IObjectSetter = object_setter
         
         #元々の要素の初期化
-        self.visible :bool = True
+        self.__visible :bool = True
         self.layer :int = 5
         self.dirty :int = 2
-        self.image :pygame.Surface = self._base_image.copy()
-        self.rect :pygame.Rect = self.image.get_rect()
+        self.__image :pygame.Surface = pygame.Surface([0,0])
+        self.__rect :pygame.Rect = self.__image.get_rect()
+            
+    @property
+    def rect(self) -> pygame.Rect:
+        return self.__rect
     
-    #image,rectに違う型のものを入れない
-    def __setattr__(self, __name: str, __value: Any) -> None:
-        if __name == "image" and not type(__value) is pygame.Surface:
-            print("error: Do not set other value type to image")
-            pygame.quit()
-            sys.exit()
-        elif __name == "rect" and not type(__value) is pygame.Rect:
-            print("error: Do not set other value type to rect")
-            pygame.quit()
-            sys.exit()
-        elif __name == "rect":
-            super().__setattr__(__name, __value)
-            #self.__rect_set()
-        else:
-            super().__setattr__(__name, __value)
+    @rect.setter
+    def rect(self, rect: pygame.Rect) -> None:
+        self.__rect = rect
+        
+    @property
+    def image(self) -> pygame.Surface:
+        return self.__image
+    
+    @image.setter
+    def image(self, image: pygame.Surface) -> None:
+        self.__image = image
+        
+    @property
+    def visible(self) -> bool:
+        return self.__visible
+    
+    @visible.setter
+    def visible(self, value: bool) -> None:
+        self.__visible = value
+        self.changed = True
             
     #ここからセッター、ゲッター       
     @property
@@ -123,14 +132,15 @@ class GameObject(I0,I1,I2,I3,I4,I5):
         self.component.position_set()
         
         self.__rect_set()
+        self.changed = True
         
     @property
-    def moving(self) -> bool:
-        return self._moving
+    def changed(self) -> bool:
+        return self._changed
     
-    @moving.setter
-    def moving(self, value) -> None:
-        self._moving = value
+    @changed.setter
+    def changed(self, value: bool) -> None:
+        self._changed = value
         
     @property
     def component(self) -> ISingleGroup:
@@ -159,6 +169,7 @@ class GameObject(I0,I1,I2,I3,I4,I5):
         self.image = image.subsurface(rect)
         
         self.rect = self.image.get_rect()
+        self.changed = True
         self.__rect_set()
         
     @property
@@ -166,7 +177,7 @@ class GameObject(I0,I1,I2,I3,I4,I5):
         return self.__size.__copy__()
     
     @size.setter
-    def size(self, size: Vector | list[int]) -> None:
+    def size(self, size: Vector | tuple[int]) -> None:
         if isinstance(size,Vector): size = Vector.change2list
         self.__size.x = size[0]
         self.__size.y = size[1]
@@ -179,6 +190,17 @@ class GameObject(I0,I1,I2,I3,I4,I5):
         self.image = image.subsurface(rect)
         
         self.rect = self.image.get_rect()
+        self.changed = True
+        self.__rect_set()
+        
+    @property
+    def _base_image(self) -> pygame.Surface:
+        return self.__base_image
+    
+    @_base_image.setter
+    def _base_image(self, surface: pygame.Surface) -> None:
+        self.__base_image = surface
+        self.changed = True
         self.__rect_set()
         
     #ここまでセッター、ゲッター
@@ -242,11 +264,15 @@ class GameObject(I0,I1,I2,I3,I4,I5):
             
     #jsonデータのセット       
     def set_data(self, data):
-        self.name = data["name"]
-        self.tag = data["tag"]
+        self._name = data["name"]
+        if("tag" in data): self.tag = data["tag"]
+        
         self._position = Vector(data["pos"][0], data["pos"][1])
-        self.layer = data["layer"]
-        self._base_image = pygame.image.load(PROJECT_PATH + f"/image/{data['path']}")
+        
+        if("layer" in data): self.layer = data["layer"]
+        
+        if("path" in data):
+            self._base_image = pygame.image.load(PROJECT_PATH + f"/image/{data['path']}")
         self.image = self._base_image.subsurface(self._base_image.get_rect())
         self.rect = self.image.get_rect()
         

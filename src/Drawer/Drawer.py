@@ -1,6 +1,7 @@
 from typing import Any
 import pygame
 import injector
+from dataclasses import dataclass
 
 from . import IGameObject
 
@@ -31,47 +32,26 @@ class Drawer(I0,I1,I2,Singleton):
 
     def draw(self, screen: pygame.Surface):
         rects = pygame.sprite.LayeredDirty.draw(self,screen)
-        pygame.display.update(self.rect_list)
+        #pygame.display.update(self.rect_list)
+        pygame.display.flip()
         return rects
     
-    def sprites(self) -> list:
+    def sprites(self) -> list[IGameObject]:
         return super().sprites()
+    
+    def __rect_list_gen(self):
+        for i in self.sprites():
+            if i.changed:
+                yield i.rect
         
     def update(self):
         self.rect_list = []
-        rects1 = []
-        rects2 = []
-        visibles1: list[bool] = []
-        visibles2: list[bool] = []
-        obj: IGameObject = None
-        for obj in self.sprites():
-            #コピーじゃないと参照が共有されて変更前との差分が作れない
-            rects1.append(obj.rect.copy())
-            visibles1.append(obj.visible)
             
         pygame.sprite.LayeredDirty.update(self)
         
-        for obj in self.sprites():
-            rects2.append(obj.rect.copy())
-            visibles2.append(obj.visible)
-            
-        for v in range(len(rects1)):
-            if(v >= len(rects2)):
-                self.rect_list += rects1[v:]
-                break
-            
-            i: pygame.Rect = rects1[v]
-            j: pygame.Rect = rects2[v]
-            if(i.center != j.center or i.size != j.size):
-                self.rect_list.append(i)
-                self.rect_list.append(j)
-                
-            elif(visibles1[v] != visibles2[v]):
-                self.rect_list.append(i)
-                self.rect_list.append(j)
-                
-        if(len(rects1) <= len(rects2)):
-            self.rect_list += rects2[v:]
+        self.rect_list = list(self.__rect_list_gen())
+        
+        
             
 from DependencyConfig import Config
 
