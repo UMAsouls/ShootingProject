@@ -35,4 +35,8 @@ class ISingleGroup(metaclass = abc.ABCMeta):
     def position_set(self) -> None:
         pass
     
+    @abc.abstractclassmethod
+    def kill(self) -> None:
+        pass
+    
     

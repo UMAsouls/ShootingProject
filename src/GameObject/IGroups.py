@@ -16,3 +16,7 @@ class IGroups(metaclass = abc.ABCMeta):
     @abc.abstractclassmethod
     def get_single_by_name(self, name:str) -> IGameObject:
         raise NotImplementedError()
+    
+    @abc.abstractclassmethod
+    def remove_single(self, name: str) -> None:
+        pass

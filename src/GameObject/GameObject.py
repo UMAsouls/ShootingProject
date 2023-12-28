@@ -284,8 +284,11 @@ class GameObject(I0,I1,I2,I3,I4,I5):
         self.__rect_set()
         
         
-    def remove(self):
-        pass
+    def kill(self):
+        if(self.component.parent == None):
+            self._groups.remove_single(self.name)
+        self.component.kill()
+        self._drawer.remove(self)
         
         
 

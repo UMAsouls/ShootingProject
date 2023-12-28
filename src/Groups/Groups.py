@@ -57,6 +57,9 @@ class Groups(I0,I1,I2,Singleton):
     def get_group_by_type(self) -> IObjectGroup:
         return
     
+    def remove_single(self, name: str) -> None:
+        self._singles[name] = None
+    
     def update(self):
         for i in self._groups.values():
             i.update()

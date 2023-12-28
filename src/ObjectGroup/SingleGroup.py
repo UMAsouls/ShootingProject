@@ -1,8 +1,9 @@
 import sys
+from typing import Iterable, Any
 import injector
 import os
 
-from pygame.sprite import LayeredDirty
+from pygame.sprite import AbstractGroup, LayeredDirty
 
 from . import ObjectGroup
 from . import IGameObject
@@ -120,6 +121,31 @@ class SingleGroup(I0,I1,I2,I3,I4, LayeredDirty):
             
         for i in self.kids:
             i.component.position_set()
+            
+    def kill(self):
+        
+        for i in self._kids.values():
+            i.kill()
+        
+        if(self.parent != None):
+            self.parent.remove(self.main)
+            
+        del self
+            
+    def remove(self, *sprites: IGameObject | AbstractGroup | Iterable) -> None:
+        
+        for i in sprites:
+        
+            for k,v in self._kids.items():
+                if v.main == i:
+                    self._kids[k] = None
+                    continue
+                
+                if v.has(i):
+                    v.remove(i)
+                
+        
+            super().remove(i.component)
         
     
     

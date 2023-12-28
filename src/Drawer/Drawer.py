@@ -1,7 +1,9 @@
-from typing import Any
+from typing import Any, Iterable, Union
 import pygame
 import injector
 from dataclasses import dataclass
+
+from pygame.sprite import AbstractGroup
 
 from . import IGameObject
 
@@ -34,6 +36,7 @@ class Drawer(I0,I1,I2,Singleton):
         rects = pygame.sprite.LayeredDirty.draw(self,screen)
         #pygame.display.update(self.rect_list)
         pygame.display.flip()
+        self.rect_list = []
         return rects
     
     def sprites(self) -> list[IGameObject]:
@@ -45,11 +48,15 @@ class Drawer(I0,I1,I2,Singleton):
                 yield i.rect
         
     def update(self):
-        self.rect_list = []
-            
         pygame.sprite.LayeredDirty.update(self)
         
         self.rect_list = list(self.__rect_list_gen())
+        
+        
+    def remove(self, *sprites: Any | AbstractGroup | Iterable) -> None:
+        for i in sprites:
+            self.rect_list.append(i.rect)
+        super().remove(*sprites)
         
         
             
