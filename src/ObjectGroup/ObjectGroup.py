@@ -38,6 +38,7 @@ class ObjectGroup(I0,I1,I2,I3,I4):
         
         self._name: str = ""
         
+        self.id_dict : dict[str, int] = {}
         self.name_dict: dict[str, int] = {}
         self.type_dict: dict[str, list[int]] = {}
         
@@ -61,10 +62,14 @@ class ObjectGroup(I0,I1,I2,I3,I4):
     def set_data(self, data: dict) -> None:
         self._name = data["name"]
         
-        for i in data["objects"]:
-            obj = self._groups.get_single_by_name(i)
+        for k,v in data["objects"].items():
+            obj = self._groups.get_single_by_name(v)
+            self.id_dict[k] = obj
             self.add(obj)
             
+            
+    def get_obj_by_id(self, id: str) -> IGameObject:
+        return self.id_dict[id]
         
     def update(self):
         pass

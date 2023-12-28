@@ -1,4 +1,6 @@
 {
+    "type": "scene",
+
     "obj": 
     [
         {"use": "test","class": "TestObject", "pos": [40, 50], "name" : "test", "tag": "Test", "path": "sample.png", "layer":5, "speed": 7},

@@ -1,4 +1,6 @@
 {
+    "type": "scene",
+
     "obj": 
     [
         {
@@ -66,10 +68,10 @@
             "use": "test",
             "class": "TestGroup",
             "name": "group",
-            "objects": [
-                "test",
-                "text"
-            ]
+            "objects": {
+                "obj": "test",
+                "text": "text"
+            } 
         }
     ]
 

@@ -80,7 +80,8 @@ class GameObject(I0,I1,I2,I3,I4,I5):
         self.dirty :int = 2
         self.__image :pygame.Surface = pygame.Surface([0,0])
         self.__rect :pygame.Rect = self.__image.get_rect()
-            
+    
+    #ここからセッター、ゲッター    
     @property
     def rect(self) -> pygame.Rect:
         return self.__rect
@@ -105,8 +106,7 @@ class GameObject(I0,I1,I2,I3,I4,I5):
     def visible(self, value: bool) -> None:
         self.__visible = value
         self.changed = True
-            
-    #ここからセッター、ゲッター       
+               
     @property
     def name(self) -> str:
         return self._name
@@ -282,6 +282,10 @@ class GameObject(I0,I1,I2,I3,I4,I5):
         self.__angle = 0
         
         self.__rect_set()
+        
+        
+    def remove(self):
+        pass
         
         
 
