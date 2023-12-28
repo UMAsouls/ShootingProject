@@ -10,6 +10,7 @@ from .IGroups import IGroups
 from .IKey import IKey
 from .IObjectSetter import IObjectSetter
 from .ISceneLoader import ISceneLoader
+from .IMusic import IMusic
 
 from Groups import IObjectGroup as I0
 from GameObject import IObjectGroup as I1
@@ -26,7 +27,8 @@ class ObjectGroup(I0,I1,I2,I3,I4):
         drawer: IDrawer, 
         key: IKey, 
         scene_loader: ISceneLoader,
-        object_setter: IObjectSetter
+        object_setter: IObjectSetter,
+        music: IMusic
         ) -> None:
         super().__init__()
         
@@ -35,6 +37,7 @@ class ObjectGroup(I0,I1,I2,I3,I4):
         self._key = key
         self._scene_loader = scene_loader
         self._obj_setter = object_setter
+        self._music = music
         
         self._name: str = ""
         

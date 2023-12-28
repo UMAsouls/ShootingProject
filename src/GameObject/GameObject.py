@@ -14,6 +14,7 @@ from . import IDrawer
 from . import IKey
 from . import ISceneLoader
 from . import IObjectSetter
+from . import IMusic
 
 from Drawer import IGameObject as I0
 from GManager import IGameObject as I1
@@ -48,6 +49,7 @@ class GameObject(I0,I1,I2,I3,I4,I5):
         key: IKey, 
         scene_loader: ISceneLoader,
         object_setter: IObjectSetter,
+        music: IMusic,
         component: ISingleGroup
         ):
         
@@ -73,6 +75,7 @@ class GameObject(I0,I1,I2,I3,I4,I5):
         self._key :IKey = key
         self._scene_loader :ISceneLoader = scene_loader
         self._obj_setter :IObjectSetter = object_setter
+        self._music :IMusic = music
         
         #元々の要素の初期化
         self.__visible :bool = True

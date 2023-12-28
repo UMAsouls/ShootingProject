@@ -37,5 +37,7 @@ from Key.Key import configs as c5
 DependencyMaker.set(c5)
 from ObjectGroup.SingleGroup import configs as c6
 DependencyMaker.set(c6)
+from Music.Music import configs as c7
+DependencyMaker.set(c7)
 
 Dependency = DependencyMaker()

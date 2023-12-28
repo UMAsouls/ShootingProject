@@ -11,6 +11,7 @@ from .IDrawer import IDrawer
 from .IKey import IKey
 from .ISceneLoader import ISceneLoader
 from .IObjectSetter import IObjectSetter
+from .IMusic import IMusic
 
 from GameObject import GameObject
 from ObjectGroup import ObjectGroup
@@ -41,6 +42,7 @@ def make_obj_from_data(data: dict[str, Any]) -> IGameObject:
             Dependency[IKey](),
             Dependency[ISceneLoader](),
             Dependency[IObjectSetter](),
+            Dependency[IMusic](),
             single
         )
         
@@ -79,7 +81,8 @@ def make_grp_from_data(data: dict[str,Any]):
         Dependency[IDrawer](),
         Dependency[IKey](),
         Dependency[ISceneLoader](),
-        Dependency[IObjectSetter]()
+        Dependency[IObjectSetter](),
+        Dependency[IMusic](),
     )
     
     grp.set_data(data)

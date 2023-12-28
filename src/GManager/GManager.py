@@ -12,6 +12,7 @@ from . import IObjectGroup
 from . import IGameObject
 from . import ISingleGroup
 from . import IObjectSetter
+from .IMusic import IMusic
 
 from Vector import Vector
     
@@ -26,7 +27,15 @@ def get_parent_path(level):
 
 #ゲームの統括クラス
 class GManager:
-    def __init__(self, groups: IGroups, key: IKey, drawer: IDrawer, scene_loader: ISceneLoader, object_setter: IObjectSetter) -> None:
+    def __init__(
+        self,
+        groups: IGroups,
+        key: IKey,
+        drawer: IDrawer,
+        scene_loader: ISceneLoader,
+        object_setter: IObjectSetter,
+        music: IMusic
+        ) -> None:
         pygame.init()
         #ゲーム画面
         self.screen = pygame.display.set_mode([0,0], DOUBLEBUF|HWSURFACE|NOFRAME)
@@ -35,6 +44,7 @@ class GManager:
         self.drawer: IDrawer = drawer
         self.scene_loader : ISceneLoader = scene_loader
         self.object_setter : IObjectSetter = object_setter
+        self.music : IMusic = music
         
         self.set_data: function = None
         
@@ -60,6 +70,7 @@ class GManager:
         
         self.groups.update()
         
+        self.music.update()
         self.key.update()
         
         for event in pygame.event.get():
