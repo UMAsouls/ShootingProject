@@ -23,7 +23,11 @@ class TextObject(GameObject):
     
     def __render(self):
         self._base_image = self.font.render(self.text, self.antialias, self.color)
-        self.size = self.font.size(self.text)
+        if(self.text != ""):
+            self.size = self.font.size(self.text)
+        else:
+            self.size = [0,0]
+        
         
     @property
     def text(self) -> str:

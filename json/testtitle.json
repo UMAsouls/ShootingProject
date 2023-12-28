@@ -19,12 +19,16 @@
             "pos": [0,0],
             "name": "text1",
             "tag" :"",
-            "path": "",
             "layer": 5,
             "text": "",
             "text_size": 100,
             "TTF": null,
-            "color": [0,0,0,0],
+            "color": {
+                "red": 0,
+                "green": 0,
+                "blue": 0,
+                "trans": 0
+            },
             "antialias": true
         },
 
@@ -34,12 +38,16 @@
             "pos": [0,0],
             "name": "text2",
             "tag" :"",
-            "path": "",
             "layer": 5,
             "text": "",
             "text_size": 50,
             "TTF": null,
-            "color": [0,0,0,0],
+            "color": {
+                "red": 0,
+                "green": 0,
+                "blue": 0,
+                "trans": 0
+            },
             "antialias": true
         }
     ],
@@ -50,7 +58,7 @@
             "class": "TitleGroup",
             "name": "group",
             "objects": {
-                "title": "test",
+                "title": "title",
                 "text1": "text1",
                 "text2": "text2"
             } 

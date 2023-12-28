@@ -5,7 +5,7 @@ import os
 from GameObject import TextObject
 from Vector import Vector
 
-class TitleText1(TextObject):
+class TitleText2(TextObject):
     def set_data(self, data) -> None:
         super().set_data(data)
         
