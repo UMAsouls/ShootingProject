@@ -32,8 +32,8 @@ class TestBat(GameObject):
             self.hit(obj)
 
     def rotate_bat(self):
-        self.angle += 5
-        if self.angle == 180:
+        self.angle += 8
+        if self.angle >= 188:
             self.angle = 0
 
 
@@ -52,6 +52,7 @@ class TestBat(GameObject):
             
         if self._key.get_key_up("b"):
             self.visible = False
+            self.angle = -8
         
         self.position = Vector(
             self.radius*math.cos(math.radians(self.angle)),
