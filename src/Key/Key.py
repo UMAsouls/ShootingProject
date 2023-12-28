@@ -11,6 +11,13 @@ from Singleton import Singleton
 #全てのアルファベットの辞書
 key_dict = {pygame.key.name(K_a+i) : K_a+i for i in range(26)}
 
+key_dict["enter"] = K_RETURN
+key_dict["space"] = K_SPACE
+key_dict["up"] = K_UP
+key_dict["down"] = K_DOWN
+key_dict["left"] = K_LEFT
+key_dict["right"] = K_RIGHT
+
 @injector.singleton
 class Key(I0,I1,I2,Singleton):
     _key = {}
