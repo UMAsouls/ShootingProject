@@ -13,3 +13,7 @@ class ISingleGroup(metaclass = abc.ABCMeta):
     @abc.abstractclassmethod
     def main(self) -> IGameObject:
         raise NotImplementedError()
+    
+    @abc.abstractclassmethod
+    def get_kid(self, name: str) -> "ISingleGroup":
+        pass

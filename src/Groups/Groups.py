@@ -48,11 +48,22 @@ class Groups(I0,I1,I2,Singleton):
         
         
     def get_single_by_name(self, name:str) -> IGameObject:
-        single: ISingleGroup = self._singles[name]
+        names = name.split(".")
+        single: ISingleGroup = self._singles[names[0]]
+        
+        for i in names[1:]:
+            single = single.get_kid(i)
+            
         return single.main
     
     def get_component_by_name(self, name: str) -> ISingleGroup:
-        return self._singles[name]
+        names = name.split(".")
+        single: ISingleGroup = self._singles[names[0]]
+        
+        for i in names[1:]:
+            single = single.get_kid(i)
+            
+        return single
     
     def get_group_by_type(self) -> IObjectGroup:
         return
