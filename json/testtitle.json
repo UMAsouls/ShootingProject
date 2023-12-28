@@ -16,7 +16,7 @@
         {
             "use": "test",
             "class": "TitleText1",
-            "pos": [500,520],
+            "pos": [530,500],
             "name": "text1",
             "tag" :"taxt1",
             "layer": 5,
@@ -35,11 +35,11 @@
         {
             "use": "test",
             "class": "TitleText2",
-            "pos": [500,620],
+            "pos": [620,620],
             "name": "text2",
             "tag" :"text2",
             "layer": 5,
-            "text": "PRESS TO FINISH",
+            "text": "FINISH ",
             "text_size": 50,
             "TTF": "JF-Dot-shinonome12.ttf",
             "color": {
