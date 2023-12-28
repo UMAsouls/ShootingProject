@@ -34,7 +34,7 @@ class TestBase(GameObject):
         
     def update(self):
         super().update()
-        print("Hp",self.hp, self.inv_time)
+        #print("Hp",self.hp, self.inv_time)
         if(self.damaged):
             self.inv_time -= 1
             if(self.inv_time < 0):
@@ -42,7 +42,6 @@ class TestBase(GameObject):
                 self.inv_time = self.inv_max
                 
         if(self.hp < 0):
-            print("killed")
             self.kill()
         
         

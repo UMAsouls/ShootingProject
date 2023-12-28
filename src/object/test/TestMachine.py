@@ -19,6 +19,8 @@ class TestMachine(GameObject):
         self.speed = data["speed"]
         
         self.change_pivot("center")
+        
+        self.sound = self._music.get_sound("shot.mp3")
 
 
     def shoot(self , k):
@@ -26,6 +28,7 @@ class TestMachine(GameObject):
         bullet.position = self.position
         bullet.mode = k
         self._drawer.add(bullet)
+        self._music.play_effect(self.sound)
         
     def update(self):
         super().update()
