@@ -7,6 +7,7 @@ from GameObject import GameObject
 from .TestBullet import TestBullet
 from Vector import Vector
 
+
 class TestBat(GameObject):
 
     def hit(self, obj: TestBullet):
@@ -26,14 +27,20 @@ class TestBat(GameObject):
         self.change_pivot("center")
         self.radius = 150
         self.position = [100,50]    #親positionとの相対位置
+        self.mode = False
         
     def on_collide(self, obj: GameObject):
         if isinstance(obj, TestBullet):
             self.hit(obj)
 
     def rotate_bat(self):
-        self.angle += 8
-        if self.angle >= 188:
+        if self.mode :
+            self.visible = True
+            self.angle += 8
+            if self.angle >= 180:
+                self.mode = False
+        else:
+            self.visible = False
             self.angle = 0
 
 
@@ -46,14 +53,15 @@ class TestBat(GameObject):
 
         #self.position = obj.rect.center
 
-        if ((self._key.get_key_repeat("b"))):
-            self.visible = True
-            self.rotate_bat()
+        if self._key.get_key_down("b"):
+            if self.mode == False:
+                self.mode = True
             
         if self._key.get_key_up("b"):
-            self.visible = False
-            self.angle = -8
+            pass
         
+        self.rotate_bat()
+
         self.position = Vector(
             self.radius*math.cos(math.radians(self.angle)),
             -1*self.radius*math.sin(math.radians(self.angle))
