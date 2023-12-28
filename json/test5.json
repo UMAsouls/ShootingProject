@@ -70,6 +70,7 @@
             "name": "group",
             "objects": {
                 "obj": "test",
+                "bat": "test.bat",
                 "text": "text"
             } 
         }

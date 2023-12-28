@@ -14,9 +14,11 @@ class TestGroup(ObjectGroup):
     def update(self):
         super().update()
         
-        pos = self.objects[0].position.change2list()
+        machine = self.get_obj_by_id("obj")
+        bat = self.get_obj_by_id("bat")
+        text: TestText = self.get_obj_by_id("text")
         
-        text: TestText= self.objects[1]
+        pos = machine.position.change2list()
         
         text.pos_x = pos[0]
         text.pos_y = pos[1]
