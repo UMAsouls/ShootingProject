@@ -1,0 +1,60 @@
+{
+    "type": "scene",
+
+    "obj": 
+    [
+        {
+            "use": "test",
+            "class": "TestTitle",
+            "pos": [0,0],
+            "name": "title",
+            "tag" :"",
+            "path": "",
+            "layer": 3
+        },
+
+        {
+            "use": "test",
+            "class": "TitleText1",
+            "pos": [0,0],
+            "name": "text1",
+            "tag" :"",
+            "path": "",
+            "layer": 5,
+            "text": "",
+            "text_size": 100,
+            "TTF": null,
+            "color": [0,0,0,0],
+            "antialias": true
+        },
+
+        {
+            "use": "test",
+            "class": "TitleText2",
+            "pos": [0,0],
+            "name": "text2",
+            "tag" :"",
+            "path": "",
+            "layer": 5,
+            "text": "",
+            "text_size": 50,
+            "TTF": null,
+            "color": [0,0,0,0],
+            "antialias": true
+        }
+    ],
+    "grp":
+    [
+        {
+            "use": "test",
+            "class": "TitleGroup",
+            "name": "group",
+            "objects": {
+                "title": "test",
+                "text1": "text1",
+                "text2": "text2"
+            } 
+        }
+    ]
+
+}
