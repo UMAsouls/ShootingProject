@@ -16,17 +16,17 @@
         {
             "use": "test",
             "class": "TitleText1",
-            "pos": [0,0],
+            "pos": [500,520],
             "name": "text1",
-            "tag" :"",
+            "tag" :"taxt1",
             "layer": 5,
-            "text": "",
-            "text_size": 100,
-            "TTF": null,
+            "text": "2 PLAYER GAME",
+            "text_size": 50,
+            "TTF": "JF-Dot-shinonome12.ttf",
             "color": {
-                "red": 0,
-                "green": 0,
-                "blue": 0,
+                "red": 255,
+                "green": 255,
+                "blue": 255,
                 "trans": 0
             },
             "antialias": true
@@ -35,17 +35,17 @@
         {
             "use": "test",
             "class": "TitleText2",
-            "pos": [0,0],
+            "pos": [500,620],
             "name": "text2",
-            "tag" :"",
+            "tag" :"text2",
             "layer": 5,
-            "text": "",
+            "text": "PRESS TO FINISH",
             "text_size": 50,
-            "TTF": null,
+            "TTF": "JF-Dot-shinonome12.ttf",
             "color": {
-                "red": 0,
-                "green": 0,
-                "blue": 0,
+                "red": 255,
+                "green": 255,
+                "blue": 255,
                 "trans": 0
             },
             "antialias": true
