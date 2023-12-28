@@ -12,6 +12,8 @@ class TestBullet(GameObject):
 
         self.t = 0
         self.mode = 0
+        
+        self.disp_rect = pygame.display.get_surface().get_rect()
 
     def set_position(self, x, y):
         self._position = (x, y)
@@ -81,3 +83,6 @@ class TestBullet(GameObject):
             self.set_velocity_goback(1.8)
 
         self._position += self.vel
+        
+        if not self.disp_rect.colliderect(self.rect):
+            self.kill()
