@@ -14,5 +14,8 @@ class GameOverGroup(ObjectGroup):
         select1: GameOverText = self.get_obj_by_id("select1")
         select2: GameOverText = self.get_obj_by_id("select2")
         
+    def selecter(self):
+        pass
+        
     def update(self):
         super().update()
