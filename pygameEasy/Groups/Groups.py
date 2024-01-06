@@ -24,6 +24,8 @@ class Groups(I0,I1,I2,Singleton):
         self._groups = {}
         self._singles = {}
         self._types = {} 
+        self.__groups_same_names = {}
+        self.__singles_same_names = {}
         
     def get_group_by_name(self, name:str) -> IObjectGroup:
         return self._groups[name]

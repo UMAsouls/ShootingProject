@@ -51,11 +51,11 @@ class Bat(GameObject):
 
         #self.position = obj.rect.center
 
-        if self._key.get_key_down("b"):
+        if self._key.get_key_down("enter"):
             if self.mode == False:
                 self.mode = True
             
-        if self._key.get_key_up("b"):
+        if self._key.get_key_up("enter"):
             pass
         
         self.rotate_bat()
