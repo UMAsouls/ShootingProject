@@ -18,10 +18,40 @@ class GameOverGroup(ObjectGroup):
         
         self.winner = ""
         self.over: bool = False
+
+        self.object_count = 0
+        self.object = ""
     
     #選択肢を選択するプログラム
     def selecter(self):
-        pass
+        if self.text.visible:
+            if self._key.get_key_down("up"):
+                if self.object_count == 1:
+                    self.select2.color = (255,255,255,0)
+                    self.select1.color = (255,0,0,0)
+                    self.object = self.select1
+                else:
+                    self.select1.color = (255,0,0,0)
+                    self.object_count = 1
+                    self.object = self.select1
+        
+            if self._key.get_key_down("down"):
+                if self.object_count == 1:
+                    self.select1.color = (255,255,255,0)
+                    self.select2.color = (255,0,0,0)
+                    self.object = self.select2
+                else:
+                    self.select2.color = (255,0,0,0)
+                    self.object_count = 1
+                    self.object = self.select2
+
+            if self._key.get_key_down("enter"):
+                if self.object == self.select1:
+                    self._scene_loader.scene_load("2player.json")
+                elif self.object == self.select2:
+                    self._scene_loader.scene_load("title.json")
+        else:
+            pass
     
     def text_set(self):
         self.text.visible = True
