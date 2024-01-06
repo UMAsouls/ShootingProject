@@ -24,7 +24,7 @@ class Bat(GameObject):
         self.visible = False
         
         self.change_pivot("center")
-        self.radius = 150
+        self.radius = 180
         self.position = [100,50]    #親positionとの相対位置
         self.mode = False
         

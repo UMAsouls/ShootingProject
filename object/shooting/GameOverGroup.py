@@ -13,7 +13,8 @@ class GameOverGroup(ObjectGroup):
         text: GameOverText = self.get_obj_by_id("text")
         select1: GameOverText = self.get_obj_by_id("select1")
         select2: GameOverText = self.get_obj_by_id("select2")
-        
+    
+    #選択肢を選択するプログラム
     def selecter(self):
         pass
         
