@@ -168,7 +168,8 @@ class GameObject(I0,I1,I2,I3,I4,I5):
         self.__angle = angle % 360
         
         if(self.__angle % 90 == 0):
-            self.image = pygame.transform.rotozoom(self._base_image, self.__angle, 1)
+            image: pygame.Surface = pygame.transform.scale(self._base_image,self.__size.change2list())
+            self.image = pygame.transform.rotozoom(self.image, self.__angle, 1)
             return
         
         image: pygame.Surface = pygame.transform.scale(self._base_image,self.__size.change2list())
