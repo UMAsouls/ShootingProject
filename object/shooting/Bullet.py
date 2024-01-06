@@ -94,6 +94,10 @@ class Bullet(GameObject):
 
         elif self.mode == 4:
             self.set_velocity_goback(400)
+            
+        self.angle = 360 - (self.vel.angle() - 90) + 180
+        
+        print(self.angle)
 
         self._position += self.vel * self.clock.get_rawtime() / 1000
         

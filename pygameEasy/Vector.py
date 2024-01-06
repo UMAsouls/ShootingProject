@@ -66,7 +66,10 @@ class Vector:
     
     #角度(degreeで出る)
     def angle(self) -> float:
-        return np.degrees(np.arcsin(self.x/self.mag()))
+        if(self.y >= 0):
+            return np.degrees(np.arccos(self.x/self.mag()))
+        else:
+            return np.degrees(np.pi + np.arccos(self.x/self.mag()))
     
     #正規化
     def normalize(self) -> "Vector":
