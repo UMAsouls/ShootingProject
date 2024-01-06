@@ -43,7 +43,7 @@ class Bullet(GameObject):
         dy_dt = vy0
 
         self.vel = Vector(dx_dt, dy_dt)
-        self.t += 0.1
+        self.t += self.clock.get_time() /1000
 
     #逆カーブ
     def set_velocity_uncrave(self, gravity):
@@ -55,7 +55,7 @@ class Bullet(GameObject):
         dy_dt = vy0
 
         self.vel = Vector(dx_dt, dy_dt)
-        self.t += 0.1
+        self.t += self.clock.get_time() /1000
 
     #行って戻って
     def set_velocity_goback(self, gravity):
@@ -67,7 +67,7 @@ class Bullet(GameObject):
         dx_dt = vx0 * self.t
 
         self.vel = Vector(dx_dt, dy_dt)
-        self.t += 0.1
+        self.t += self.clock.get_time() /1000
 
     #反射
     def reflect(self, angle_ref):
@@ -87,17 +87,15 @@ class Bullet(GameObject):
            self.set_velocity_street()
 
         elif self.mode == 2:
-            self.set_velocity_crave(400)
+            self.set_velocity_crave(1400)
 
         elif self.mode == 3:
-            self.set_velocity_uncrave(400)
+            self.set_velocity_uncrave(1400)
 
         elif self.mode == 4:
-            self.set_velocity_goback(400)
+            self.set_velocity_goback(1400)
             
         self.angle = 360 - (self.vel.angle() - 90) + 180
-        
-        print(self.angle)
 
         self._position += self.vel * self.clock.get_rawtime() / 1000
         
