@@ -21,6 +21,8 @@ class Defense(GameObject):
         
         self.position = [size[0]/2, size[1]*7//10]
         
+        self.pos_lim = size[1] * 3 / 5
+        
         self._stop:bool = False
         
     @property
@@ -44,9 +46,9 @@ class Defense(GameObject):
             self.vel += Vector(-1*self.speed,0)
         if(self._key.get_key_repeat("l")):
             self.vel += Vector(self.speed,0)
-        if(self._key.get_key_repeat("i")):
+        if self._key.get_key_repeat("i") and self.position.y >= self.pos_lim:
             self.vel += Vector(0,-1*self.speed)
-        if(self._key.get_key_repeat("k")):
+        if self._key.get_key_repeat("k") :
             self.vel += Vector(0,self.speed)
            
         self.position += self.vel
