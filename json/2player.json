@@ -13,7 +13,7 @@
             "layer":5, 
             "speed": 12,
             "kid": [
-                {"use": "shooting", "class": "Bat", "pos":[0,0], "name":"bat","tag":"Bat","path":"bat.png","layer":6, "speed":7}
+                {"use": "shooting", "class": "Bat", "pos":[0,0], "name":"bat","tag":"Bat","path":"bat_red.png","layer":6, "speed":7}
             ]
         },
         {"use": "shooting","class": "Background", "pos" : [0,0], "name" : "bg", "tag": "bg", "path" : "bg_sample.png", "layer":0},

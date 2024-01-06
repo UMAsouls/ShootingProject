@@ -18,13 +18,13 @@ class Bat(GameObject):
         if "speed" in data:
             self.speed = data["speed"]
 
-        self.size = [180,180]
+        self.size = [200,200]
         self.rect = self.image.get_rect(center = self.rect.center)
         self.copy = self.image.copy()
         self.visible = False
         
         self.change_pivot("center")
-        self.radius = 150
+        self.radius = 180
         self.position = [100,50]    #親positionとの相対位置
         self.mode = False
         
