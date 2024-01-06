@@ -87,13 +87,13 @@ class Bullet(GameObject):
            self.set_velocity_street()
 
         elif self.mode == 2:
-            self.set_velocity_crave(700)
+            self.set_velocity_crave(400)
 
         elif self.mode == 3:
-            self.set_velocity_uncrave(700)
+            self.set_velocity_uncrave(400)
 
         elif self.mode == 4:
-            self.set_velocity_goback(700)
+            self.set_velocity_goback(400)
 
         self._position += self.vel * self.clock.get_rawtime() / 1000
         
