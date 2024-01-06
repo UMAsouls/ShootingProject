@@ -31,7 +31,7 @@ class Bullet(GameObject):
     
     #ストレート       
     def set_velocity_street(self):
-        self.set_velocity(1500, -90)
+        self.set_velocity(1000, -90)
 
     #カーブ
     def set_velocity_crave(self, gravity):
