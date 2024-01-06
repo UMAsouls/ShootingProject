@@ -28,7 +28,7 @@ class Attack(GameObject):
         
         self.angle = 180
         
-        self.pos_lim = size[1] * 2 / 5
+        self.pos_lim = [size[0], size[1] * 2 / 5]
         
         self._stop:bool = False
 
@@ -56,13 +56,13 @@ class Attack(GameObject):
         if self._stop:
             return
         
-        if(self._key.get_key_repeat("a")):
+        if(self._key.get_key_repeat("a")) and self.rect.left > 0:
             self.vel += Vector(-1*self.speed,0)
-        if(self._key.get_key_repeat("d")):
+        if(self._key.get_key_repeat("d")) and self.rect.right < self.pos_lim[0]:
             self.vel += Vector(self.speed,0)
-        if(self._key.get_key_repeat("w")):
+        if(self._key.get_key_repeat("w")) and self.rect.top > 0:
             self.vel += Vector(0,-1*self.speed)
-        if(self._key.get_key_repeat("s")) and self.position.y <= self.pos_lim:
+        if(self._key.get_key_repeat("s")) and self.rect.bottom <= self.pos_lim[1]:
             self.vel += Vector(0,self.speed)
 
         if self.interval == 25:
