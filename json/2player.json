@@ -72,7 +72,7 @@
             "TTF": null,
             "color": {"red": 255, "green": 255, "blue": 255, "trans": 30},
             "antialias": true,
-            "count": 1200
+            "count": 40
 
         },
 
