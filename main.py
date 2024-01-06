@@ -57,13 +57,13 @@ def make_obj_from_data(data: dict[str, Any]) -> IGameObject:
             PROJECT_PATH
         )
         
-        obj.set_data(data)
-
         #data内で子を指定することにする
         if "kid" in data:
             for i in data["kid"]:
                 kid: IGameObject = make_obj_from_data(i)
                 kid.component.parent = single
+        
+        obj.set_data(data)
             
         return obj
 
@@ -125,7 +125,7 @@ def main():
         music = music
         )
     #gm.set_func(set_data)
-    gm.scene_loader.scene_load("testtitle.json")
+    gm.scene_loader.scene_load("title.json")
     gm.MainLoop()
 
 

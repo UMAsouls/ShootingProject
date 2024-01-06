@@ -70,6 +70,10 @@ class Groups(I0,I1,I2,Singleton):
     
     def remove_single(self, name: str) -> None:
         self._singles[name] = None
+        
+    def remove_obj_from_grp(self, obj: IGameObject) -> None:
+        for g in self._groups.values():
+            g.remove(obj)
     
     def update(self):
         for i in self._groups.values():

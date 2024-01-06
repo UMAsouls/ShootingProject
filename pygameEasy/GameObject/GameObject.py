@@ -166,6 +166,10 @@ class GameObject(I0,I1,I2,I3,I4,I5):
     def angle(self, angle: int) -> None:
         self.__angle = angle % 360
         
+        if(self.__angle % 90 == 0):
+            self.image = pygame.transform.rotozoom(self._base_image, self.__angle, 1)
+            return
+        
         image: pygame.Surface = pygame.transform.scale(self._base_image,self.__size.change2list())
         image = pygame.transform.rotozoom(image, self.__angle, 1)
         rect = image.get_rect()
@@ -183,9 +187,12 @@ class GameObject(I0,I1,I2,I3,I4,I5):
     
     @size.setter
     def size(self, size: Vector | tuple[int]) -> None:
-        if isinstance(size,Vector): size = Vector.change2list
+        if isinstance(size,Vector): size = size.change2list()
         self.__size.x = size[0]
         self.__size.y = size[1]
+        
+        if(self.__size.x <= 0): self.__size.x = 1
+        if(self.__size.y <= 0): self.__size.y = 1
         
         image: pygame.Surface = pygame.transform.scale(self._base_image,self.__size.change2list())
         image = pygame.transform.rotozoom(image, self.__angle, 1)
@@ -264,7 +271,8 @@ class GameObject(I0,I1,I2,I3,I4,I5):
         collides = pygame.sprite.spritecollide(self, self._drawer, False)
         
         for i in collides:
-            self.on_collide(i)
+            if i.visible:
+                self.on_collide(i)
             
             
     #jsonデータのセット       
@@ -288,11 +296,14 @@ class GameObject(I0,I1,I2,I3,I4,I5):
         
         self.__rect_set()
         
+        if("size" in data): self.size = Vector(data["size"][0], data["size"][1])
+        
         
     def kill(self):
         if(self.component.parent == None):
             self._groups.remove_single(self.name)
         self.component.kill()
+        self._groups.remove_obj_from_grp(self)
         self._drawer.remove(self)
         
         

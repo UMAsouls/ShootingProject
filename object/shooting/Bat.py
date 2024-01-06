@@ -1,41 +1,66 @@
 import pygame
 from pygame import locals
 import os
+import math
 
 from pygameEasy.GameObject import GameObject
 from pygameEasy.Vector import Vector
 
+
 class Bat(GameObject):
 
     def hit(self, obj):
-        obj.vel
+        obj.set_velocity(10,-90)
 
     def set_data(self, data):
         super().set_data(data)
-        self.visible = False
 
         if "speed" in data:
             self.speed = data["speed"]
+
+        self.size = [180,180]
+        self.rect = self.image.get_rect(center = self.rect.center)
+        self.copy = self.image.copy()
+        self.visible = False
+        
+        self.change_pivot("center")
+        self.radius = 150
+        self.position = [100,50]    #親positionとの相対位置
+        self.mode = False
+        
+    def on_collide(self, obj: GameObject):
+        pass
+
+    def rotate_bat(self):
+        if self.mode :
+            self.visible = True
+            self.angle += 12
+            if self.angle >= 180:
+                self.mode = False
+        else:
+            self.visible = False
+            self.angle = 0
+
 
     def update(self):
         super().update()
 
         self.vel = Vector(0,0)
-        self.image = pygame.transform.scale(self.image,(180,120))
 
-        if(self._key.get_key_repeat("a")):
-            self.vel += Vector(-1*self.speed,0)
-        if(self._key.get_key_repeat("d")):
-            self.vel += Vector(self.speed,0)
-        if(self._key.get_key_repeat("w")):
-            self.vel += Vector(0,-1*self.speed)
-        if(self._key.get_key_repeat("s")):
-            self.vel += Vector(0,self.speed)
-        if ((self._key.get_key_repeat("b"))):
-            self.visible = True
-        self._position += self.vel
+        obj: GameObject = self._groups.get_single_by_name("test")
+
+        #self.position = obj.rect.center
+
+        if self._key.get_key_down("b"):
+            if self.mode == False:
+                self.mode = True
             
-        pygame.sprite.collide_rect(self.position)
+        if self._key.get_key_up("b"):
+            pass
+        
+        self.rotate_bat()
 
-        
-        
+        self.position = Vector(
+            self.radius*math.cos(math.radians(self.angle)),
+            -1*self.radius*math.sin(math.radians(self.angle))
+        )

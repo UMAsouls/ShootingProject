@@ -20,3 +20,7 @@ class IGroups(metaclass = abc.ABCMeta):
     @abc.abstractclassmethod
     def remove_single(self, name: str) -> None:
         pass
+    
+    @abc.abstractclassmethod
+    def remove_obj_from_grp(self, obj: IGameObject) -> None:
+        pass

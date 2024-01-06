@@ -40,7 +40,7 @@ class Vector:
     
     #内部の値をnp.arrayとして返す
     def getNum(self) -> np.ndarray:
-        return np.array([self.x, self.y])
+        return self.__num
     
     #内積
     def dot(self, other: "Vector") -> float:

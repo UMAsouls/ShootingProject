@@ -1,0 +1,94 @@
+{
+    "type": "scene",
+
+    "obj": 
+    [
+        {
+            "use": "shooting",
+            "class": "Defense", 
+            "pos": [0, 0], 
+            "name" : "machine", 
+            "tag": "Test", 
+            "path": "sample.png", 
+            "layer":5, 
+            "speed": 12,
+            "kid": [
+                {"use": "shooting", "class": "Bat", "pos":[0,0], "name":"bat","tag":"Bat","path":"bat.png","layer":6, "speed":7}
+            ]
+        },
+        {"use": "shooting","class": "Background", "pos" : [0,0], "name" : "bg", "tag": "bg", "path" : "bg_sample.png", "layer":0},
+        {
+            "use": "shooting",
+            "class": "Attack", 
+            "pos": [0,0], 
+            "name" : "test", 
+            "tag": "Test", 
+            "path": "sample.png", 
+            "layer":5, 
+            "speed": 12,
+            "ball_data": {
+                "use": "shooting",
+                "class": "Bullet",
+                "pos": [0,0],
+                "name": "ball",
+                "tag": "test",
+                "path": "bg_sample3.png",
+                "layer": 5
+            },
+            "kid": [
+                
+            ]
+        },
+        {"use": "shooting","class": "Base", "pos" : [200,400], "name" : "base", "tag": "goal", "path" : "HP_sample.png", "layer":4},
+
+        {
+            "use": "shooting",
+            "class": "Bar1",
+            "pos": [100,100],
+            "name" : "bar1",
+            "layer": 7,
+            "path": "bg_sample3.png",
+            "size": [500, 70]
+        },
+
+        {
+            "use": "shooting",
+            "class": "Bar2",
+            "pos": [100,100],
+            "name" : "bar2",
+            "layer": 6,
+            "path": "bg_sample4.png",
+            "size": [500, 70]
+        },
+
+        {
+            "use": "shooting",
+            "class": "Counter",
+            "pos":[100,100],
+            "name": "counter",
+            "layer": 6,
+            "text": "000",
+            "text_size": 100,
+            "TTF": null,
+            "color": {"red": 255, "green": 255, "blue": 255, "trans": 30},
+            "antialias": true,
+            "count": 1200
+
+        }
+
+    ],
+    "grp":
+    [
+        {
+            "use": "shooting",
+            "class": "HPbar",
+            "name": "group",
+            "objects": {
+                "base": "base",
+                "bar1": "bar1",
+                "bar2": "bar2"
+            } 
+        }
+    ]
+
+}
