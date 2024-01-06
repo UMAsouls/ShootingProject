@@ -18,7 +18,7 @@ class Bat(GameObject):
         if "speed" in data:
             self.speed = data["speed"]
 
-        self.size = [180,180]
+        self.size = [270,180]
         self.rect = self.image.get_rect(center = self.rect.center)
         self.copy = self.image.copy()
         self.visible = False

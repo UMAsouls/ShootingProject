@@ -4,6 +4,7 @@ from pygame.locals import *
 import os
 import sys
 import injector
+import numpy as np
 
 from pygameEasy.Vector import Vector
 
@@ -173,7 +174,13 @@ class GameObject(I0,I1,I2,I3,I4,I5):
         image: pygame.Surface = pygame.transform.scale(self._base_image,self.__size.change2list())
         image = pygame.transform.rotozoom(image, self.__angle, 1)
         rect = image.get_rect()
-        rect.size = self.size.change2list()
+        size = self.size.change2list()
+            
+        rect.size = [
+            abs(size[0]*np.cos(np.deg2rad(self.__angle))) + abs(size[1]*np.sin(np.deg2rad(self.__angle))),
+            abs(size[1]*np.cos(np.deg2rad(self.__angle))) + abs(size[0]*np.sin(np.deg2rad(self.__angle)))
+        ]
+        
         rect.center = [image.get_width()//2, image.get_height()//2]
         self.image = image.subsurface(rect)
         
@@ -197,7 +204,13 @@ class GameObject(I0,I1,I2,I3,I4,I5):
         image: pygame.Surface = pygame.transform.scale(self._base_image,self.__size.change2list())
         image = pygame.transform.rotozoom(image, self.__angle, 1)
         rect = image.get_rect()
-        rect.size = self.size.change2list()
+        size = self.size.change2list()
+            
+        rect.size = [
+            abs(size[0]*np.cos(np.deg2rad(self.__angle))) + abs(size[1]*np.sin(np.deg2rad(self.__angle))),
+            abs(size[1]*np.cos(np.deg2rad(self.__angle))) + abs(size[0]*np.sin(np.deg2rad(self.__angle)))
+        ]
+        
         rect.center = [image.get_width()//2, image.get_height()//2]
         self.image = image.subsurface(rect)
         

@@ -74,6 +74,45 @@
             "antialias": true,
             "count": 1200
 
+        },
+
+        {
+            "use": "shooting",
+            "class": "GameOverText",
+            "pos":[300,200],
+            "name": "winner",
+            "layer": 6,
+            "text": "Win: ",
+            "text_size": 800,
+            "TTF": null,
+            "color": {"red": 255, "green": 255, "blue": 255, "trans": 0},
+            "antialias": true
+        },
+
+        {
+            "use": "shooting",
+            "class": "GameOverText",
+            "pos":[300,200],
+            "name": "over_select1",
+            "layer": 6,
+            "text": "Continue",
+            "text_size": 100,
+            "TTF": null,
+            "color": {"red": 255, "green": 255, "blue": 255, "trans": 0},
+            "antialias": true
+        },
+
+        {
+            "use": "shooting",
+            "class": "GameOverText",
+            "pos":[300,200],
+            "name": "over_select2",
+            "layer": 6,
+            "text": "Back Title",
+            "text_size": 100,
+            "TTF": null,
+            "color": {"red": 255, "green": 255, "blue": 255, "trans": 0},
+            "antialias": true
         }
 
     ],
@@ -88,6 +127,19 @@
                 "bar1": "bar1",
                 "bar2": "bar2"
             } 
+        },
+
+        {
+            "use": "shooting",
+            "class": "GameOverGroup",
+            "name": "over_group",
+            "objects": {
+                "base": "base",
+                "counter": "counter",
+                "text": "winner",
+                "select1": "over_select1",
+                "select2": "over_select2"
+            }
         }
     ]
 

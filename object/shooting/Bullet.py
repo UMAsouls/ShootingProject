@@ -16,6 +16,8 @@ class Bullet(GameObject):
         self.mode = 0
         
         self.disp_rect = pygame.display.get_surface().get_rect()
+        
+        self.vel = Vector(20,-90)
 
     def set_position(self, x, y):
         self._position = (x, y)
