@@ -83,7 +83,7 @@
             "name": "winner",
             "layer": 6,
             "text": "Win: ",
-            "text_size": 800,
+            "text_size": 400,
             "TTF": null,
             "color": {"red": 255, "green": 255, "blue": 255, "trans": 0},
             "antialias": true

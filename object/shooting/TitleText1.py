@@ -10,5 +10,7 @@ class TitleText1(TextObject):
     def set_data(self, data) -> None:
         super().set_data(data)
         
+        
+        
     def update(self):
         super().update()
