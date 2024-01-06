@@ -17,7 +17,9 @@ class Bullet(GameObject):
         
         self.disp_rect = pygame.display.get_surface().get_rect()
         
-        self.vel = Vector(20,-90)
+        self.vel = Vector(2000,-90)
+        
+        self.clock = pygame.time.Clock()
 
     def set_position(self, x, y):
         self._position = (x, y)
@@ -29,11 +31,11 @@ class Bullet(GameObject):
     
     #ストレート       
     def set_velocity_street(self):
-        self.set_velocity(20, -90)
+        self.set_velocity(1500, -90)
 
     #カーブ
     def set_velocity_crave(self, gravity):
-        self.set_velocity(13,-40)
+        self.set_velocity(1000,-40)
         vx0 = self.vel.x
         vy0 = self.vel.y
         
@@ -45,7 +47,7 @@ class Bullet(GameObject):
 
     #逆カーブ
     def set_velocity_uncrave(self, gravity):
-        self.set_velocity(13,-130)
+        self.set_velocity(1000,-130)
         vx0 = self.vel.x
         vy0 = self.vel.y
         
@@ -57,7 +59,7 @@ class Bullet(GameObject):
 
     #行って戻って
     def set_velocity_goback(self, gravity):
-        self.set_velocity(5,-270)
+        self.set_velocity(500,-270)
         vx0 = self.vel.x
         vy0 = self.vel.y
 
@@ -79,20 +81,21 @@ class Bullet(GameObject):
                 self.reflect(obj.angle)
            
     def update(self):
+        self.clock.tick()
         super().update()
         if self.mode == 1:
            self.set_velocity_street()
 
         elif self.mode == 2:
-            self.set_velocity_crave(1.8)
+            self.set_velocity_crave(700)
 
         elif self.mode == 3:
-            self.set_velocity_uncrave(1.8)
+            self.set_velocity_uncrave(700)
 
         elif self.mode == 4:
-            self.set_velocity_goback(1.8)
+            self.set_velocity_goback(700)
 
-        self._position += self.vel
+        self._position += self.vel * self.clock.get_rawtime() / 1000
         
         if not self.disp_rect.colliderect(self.rect):
             self.kill()

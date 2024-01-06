@@ -34,6 +34,20 @@ class Vector:
         
         return Vector(n[0], n[1])
     
+    #乗算オペレーター
+    def __mul__(self, other) -> "Vector":
+        if isinstance(other, Vector):
+            return self.dot(other)
+        else:
+            return Vector(self.x*other, self.y*other)
+    
+    #除算オペレーター
+    def __truediv__(self, other) -> "Vector":
+        if isinstance(other, Vector):
+            return self
+        else:
+            return Vector(self.x/other, self.y/other)
+    
     #文字列化
     def __str__(self) -> str:
         return "[" + str(self.x) + ", " + str(self.y) + "]"

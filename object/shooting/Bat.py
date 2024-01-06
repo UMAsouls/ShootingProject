@@ -28,13 +28,15 @@ class Bat(GameObject):
         self.position = [100,50]    #親positionとの相対位置
         self.mode = False
         
+        self.clock = pygame.time.Clock()
+        
     def on_collide(self, obj: GameObject):
         pass
 
     def rotate_bat(self):
         if self.mode :
             self.visible = True
-            self.angle += 12
+            self.angle += 360*self.clock.get_rawtime()//1000
             if self.angle >= 180:
                 self.mode = False
         else:
@@ -43,6 +45,8 @@ class Bat(GameObject):
 
 
     def update(self):
+        self.clock.tick()
+        
         super().update()
 
         self.vel = Vector(0,0)

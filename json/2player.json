@@ -48,7 +48,7 @@
             "name" : "bar1",
             "layer": 7,
             "path": "bg_sample3.png",
-            "size": [500, 70]
+            "size": [500, 35]
         },
 
         {
@@ -58,7 +58,7 @@
             "name" : "bar2",
             "layer": 6,
             "path": "bg_sample4.png",
-            "size": [500, 70]
+            "size": [500, 35]
         },
 
         {
