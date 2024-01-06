@@ -32,7 +32,7 @@ class TitleGroup(ObjectGroup):
                 self.object.color = (255,0,0,0)
                 self.object_count = 1
         
-        if self._key.get_key_down("enter"):
+        if self._key.get_key_down("enter") and self.object_count == 1:
             if self.object.name == "text1":
                 self._scene_loader.scene_load("2player.json")
             elif self.object.name == "text2":
