@@ -31,11 +31,11 @@ class Bullet(GameObject):
     
     #ストレート       
     def set_velocity_street(self):
-        self.set_velocity(1000, -90)
+        self.set_velocity(400, -90)
 
     #カーブ
     def set_velocity_crave(self, gravity):
-        self.set_velocity(1000,-40)
+        self.set_velocity(800,-20)
         vx0 = self.vel.x
         vy0 = self.vel.y
         
@@ -47,7 +47,7 @@ class Bullet(GameObject):
 
     #逆カーブ
     def set_velocity_uncrave(self, gravity):
-        self.set_velocity(1000,-130)
+        self.set_velocity(800,-160)
         vx0 = self.vel.x
         vy0 = self.vel.y
         
@@ -59,7 +59,7 @@ class Bullet(GameObject):
 
     #行って戻って
     def set_velocity_goback(self, gravity):
-        self.set_velocity(500,-270)
+        self.set_velocity(800,-270)
         vx0 = self.vel.x
         vy0 = self.vel.y
 
@@ -71,8 +71,8 @@ class Bullet(GameObject):
 
     #反射
     def reflect(self, angle_ref):
-        self.vel.x = self.vel.x * math.cos(math.radians(angle_ref * 2)) - self.vel.y  * -1 * math.sin(math.radians(angle_ref * 2))
-        self.vel.y = self.vel.x * -1 * math.sin(math.radians(angle_ref * 2)) - self.vel.y * math.cos(math.radians(angle_ref * 2))
+        self.vel.x = (self.vel.x **2 + self.vel.y **2 ) **0.5 * math.cos(math.radians(angle_ref + 90))
+        self.vel.y = -1 * (self.vel.x **2 + self.vel.y **2 ) **0.5 * math.sin(math.radians(angle_ref + 90))
         self.mode = -1
         
     def on_collide(self, obj: GameObject):
@@ -87,13 +87,13 @@ class Bullet(GameObject):
            self.set_velocity_street()
 
         elif self.mode == 2:
-            self.set_velocity_crave(1400)
+            self.set_velocity_crave(900)
 
         elif self.mode == 3:
-            self.set_velocity_uncrave(1400)
+            self.set_velocity_uncrave(900)
 
         elif self.mode == 4:
-            self.set_velocity_goback(1400)
+            self.set_velocity_goback(1000)
             
         self.angle = 360 - (self.vel.angle() - 90) + 180
 
