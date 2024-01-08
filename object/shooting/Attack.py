@@ -65,7 +65,7 @@ class Attack(GameObject):
         if(self._key.get_key_repeat("s")) and self.rect.bottom <= self.pos_lim[1]:
             self.vel += Vector(0,self.speed)
 
-        if self.interval == 25:
+        if self.interval == 45:
             if(self._key.get_key_down("c")):
                 self.shoot(1)
 
