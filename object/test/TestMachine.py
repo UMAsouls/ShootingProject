@@ -48,15 +48,15 @@ class TestMachine(GameObject):
                 self.shoot(1)
                 self.interval = 0
 
-            if(self._key.get_key_down("v")):
+            elif(self._key.get_key_down("v")):
                 self.shoot(2)
                 self.interval = 0
 
-            if(self._key.get_key_down("m")):
+            elif(self._key.get_key_down("m")):
                 self.shoot(3)
                 self.interval = 0
 
-            if(self._key.get_key_down("n")):
+            elif(self._key.get_key_down("n")):
                 self.shoot(4)
                 self.interval = 0
 
