@@ -31,11 +31,11 @@ class Bullet(GameObject):
     
     #ストレート       
     def set_velocity_street(self):
-        self.set_velocity(300, -90)
+        self.set_velocity(500, -90)
 
     #カーブ
     def set_velocity_crave(self, gravity):
-        self.set_velocity(800,-20)
+        self.set_velocity(1000,-45)
         vx0 = self.vel.x
         vy0 = self.vel.y
         
@@ -47,7 +47,7 @@ class Bullet(GameObject):
 
     #逆カーブ
     def set_velocity_uncrave(self, gravity):
-        self.set_velocity(800,-160)
+        self.set_velocity(1000,-135)
         vx0 = self.vel.x
         vy0 = self.vel.y
         
@@ -93,7 +93,7 @@ class Bullet(GameObject):
             self.set_velocity_uncrave(900)
 
         elif self.mode == 4:
-            self.set_velocity_goback(500)
+            self.set_velocity_goback(800)
             
         self.angle = 360 - (self.vel.angle() - 90) + 180
 
