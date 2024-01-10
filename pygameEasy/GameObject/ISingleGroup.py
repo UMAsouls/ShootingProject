@@ -36,6 +36,10 @@ class ISingleGroup(metaclass = abc.ABCMeta):
         pass
     
     @abc.abstractclassmethod
+    def get_kid(self, name:str) -> "ISingleGroup":
+        pass
+    
+    @abc.abstractclassmethod
     def kill(self) -> None:
         pass
     

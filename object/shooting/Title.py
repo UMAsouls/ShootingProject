@@ -12,5 +12,8 @@ class Title(GameObject):
         super().set_data(data)
         self.size = pygame.display.get_surface().get_size()
         
+        self.bgm = self._music.get_sound("title.ogg")
+        self._music.play_bgm(self.bgm)
+        
     def update(self):
         super().update()

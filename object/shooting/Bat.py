@@ -18,7 +18,14 @@ class Bat(GameObject):
         if "speed" in data:
             self.speed = data["speed"]
 
-        self.size = [270,180]
+        raw_size = [270,180]
+        disp_size = pygame.display.get_surface().get_size()
+        
+        self.size = [
+            raw_size[0] * disp_size[0] // 1920,
+            raw_size[1] * disp_size[1] // 1080
+        ]
+        
         self.rect = self.image.get_rect(center = self.rect.center)
         self.copy = self.image.copy()
         self.visible = False
@@ -28,7 +35,12 @@ class Bat(GameObject):
         self.position = [100,50]    #親positionとの相対位置
         self.mode = False
         
+        self.swing = self._music.get_sound("light_saber1.mp3")
+        self.stop = False
+        
         self.clock = pygame.time.Clock()
+        self.c_lim = 0.4
+        self.count = self.c_lim
         
     def on_collide(self, obj: GameObject):
         pass
@@ -39,25 +51,29 @@ class Bat(GameObject):
             self.angle += 360*self.clock.get_rawtime()//1000
             if self.angle >= 180:
                 self.mode = False
+                self.count = 0
         else:
             self.visible = False
             self.angle = 0
+            self.count += self.clock.get_time() / 1000
 
 
     def update(self):
         self.clock.tick()
         
         super().update()
+        
+        if self.stop:
+            return
 
         self.vel = Vector(0,0)
-
-        obj: GameObject = self._groups.get_single_by_name("test")
 
         #self.position = obj.rect.center
 
         if self._key.get_key_down("enter"):
-            if self.mode == False:
+            if self.mode == False and self.count >= self.c_lim:
                 self.mode = True
+                self._music.play_effect(self.swing)
             
         if self._key.get_key_up("enter"):
             pass

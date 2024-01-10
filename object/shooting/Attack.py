@@ -13,7 +13,7 @@ class Attack(GameObject):
         super().set_data(data)
         
         self.vel = Vector(0,0)
-        self.interval = 0
+        self.interval: float = 1.0
 
         self.ball = data["ball_data"]
         self.speed = data["speed"]
@@ -31,6 +31,8 @@ class Attack(GameObject):
         self.pos_lim = [size[0], size[1] * 2 / 5]
         
         self._stop:bool = False
+        
+        self.clock = pygame.time.Clock()
 
 
     def shoot(self , k):
@@ -39,7 +41,7 @@ class Attack(GameObject):
         bullet.mode = k
         self._drawer.add(bullet)
         self._music.play_effect(self.sound)
-        self.interval = 0
+        self.interval = 0.0
         
     @property
     def stop(self) -> bool:
@@ -50,6 +52,8 @@ class Attack(GameObject):
         self._stop = v
         
     def update(self):
+        self.clock.tick()
+        
         super().update()
         self.vel = Vector(0,0)
         
@@ -65,7 +69,7 @@ class Attack(GameObject):
         if(self._key.get_key_repeat("s")) and self.rect.bottom <= self.pos_lim[1]:
             self.vel += Vector(0,self.speed)
 
-        if self.interval == 45:
+        if self.interval >= 0.8:
             if(self._key.get_key_down("c")):
                 self.shoot(1)
 
@@ -79,6 +83,6 @@ class Attack(GameObject):
                 self.shoot(4)
 
         else:
-            self.interval += 1
+            self.interval += self.clock.get_time() / 1000
            
         self.position += self.vel

@@ -7,6 +7,7 @@ from pygameEasy.GameObject import GameObject
 from pygameEasy.Vector import Vector
 
 from .Bat import Bat
+#from .Base import Base
 
 class Bullet(GameObject):
     def set_data(self, data):
@@ -20,6 +21,11 @@ class Bullet(GameObject):
         self.vel = Vector(2000,-90)
         
         self.clock = pygame.time.Clock()
+        
+        self.hit = self._music.get_sound("damage.ogg")
+        self.ref_effect = self._music.get_sound("damaged7.mp3")
+        
+        self.effect_data = data["effect"]
 
     def set_position(self, x, y):
         self._position = (x, y)
@@ -31,7 +37,7 @@ class Bullet(GameObject):
     
     #ストレート       
     def set_velocity_street(self):
-        self.set_velocity(300, -90)
+        self.set_velocity(350, -90)
 
     #カーブ
     def set_velocity_crave(self, gravity):
@@ -71,14 +77,23 @@ class Bullet(GameObject):
 
     #反射
     def reflect(self, angle_ref):
+        self._music.play_effect(self.ref_effect)
         self.vel.x = (self.vel.x **2 + self.vel.y **2 ) **0.5 * math.cos(math.radians(angle_ref + 90))
         self.vel.y = -1 * (self.vel.x **2 + self.vel.y **2 ) **0.5 * math.sin(math.radians(angle_ref + 90))
         self.mode = -1
+        
+    def bomb(self):
+        self._music.play_effect(self.hit)
+        effect = self._obj_setter.make_obj(self.effect_data)
+        effect.position = self.position
+        self._drawer.add(effect)
+        self.kill()
         
     def on_collide(self, obj: GameObject):
         if isinstance(obj, Bat):
             if self.mode != -1:
                 self.reflect(obj.angle)
+            
            
     def update(self):
         self.clock.tick()
@@ -99,5 +114,5 @@ class Bullet(GameObject):
 
         self._position += self.vel * self.clock.get_rawtime() / 1000
         
-        if not self.disp_rect.colliderect(self.rect):
+        if not self.disp_rect.colliderect(self.rect) and self.position.y >= self.disp_rect.bottom:
             self.kill()

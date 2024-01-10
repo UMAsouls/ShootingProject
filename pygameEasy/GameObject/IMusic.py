@@ -18,3 +18,7 @@ class IMusic(metaclass = abc.ABCMeta):
     @abc.abstractclassmethod
     def play_effect(self, sound: Sound, maxtime: int = 0) -> None:
         pass
+    
+    @abc.abstractclassmethod
+    def stop_bgm(self, fadetime: int = 0) -> None:
+        pass

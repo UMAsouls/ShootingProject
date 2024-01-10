@@ -12,6 +12,7 @@ from pygameEasy.ObjectSetter.IMusic import IMusic as I3
 
 BGM_END = 25
 BGM_CHANGE = 26
+BGM_STOP = 27
 
 print(I0, I1, I2, I3)
 
@@ -67,6 +68,7 @@ class Music(Singleton, I0, I1, I2, I3):
         self._bgm_channel.set_endevent(BGM_CHANGE)
         
     def stop_bgm(self, fadetime: int = 0):
+        self._bgm_channel.set_endevent(BGM_STOP)
         self._bgm_channel.fadeout(fadetime)
     
     def play_effect(self, sound: Sound, maxtime: int = 0) -> None:

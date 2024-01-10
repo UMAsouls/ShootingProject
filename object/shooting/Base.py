@@ -31,6 +31,7 @@ class Base(GameObject):
             if not self.damaged:
                 self.hp -= 10 
                 self.damaged = True
+                obj.bomb()
                 
     def get_hp_ratio(self) -> float:
         return self.hp/self.max_hp

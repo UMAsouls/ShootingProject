@@ -5,6 +5,8 @@ from pygameEasy.ObjectGroup import ObjectGroup
 from .Base import Base
 from .Counter import Counter
 from .GameOverText import GameOverText
+from .Attack import Attack
+from .Defense import Defense
 
 class GameOverGroup(ObjectGroup):
     def set_data(self, data: dict) -> None:
@@ -16,11 +18,17 @@ class GameOverGroup(ObjectGroup):
         self.select1: GameOverText = self.get_obj_by_id("select1")
         self.select2: GameOverText = self.get_obj_by_id("select2")
         
+        self.attack: Attack = self.get_obj_by_id("attack")
+        self.defence: Defense = self.get_obj_by_id("defence")
+        self.bat = self.defence.component.get_kid("bat").main
+        
         self.winner = ""
         self.over: bool = False
 
         self.object_count = 0
         self.object = ""
+        
+        self.win = self._music.get_sound("win.ogg")
     
     #選択肢を選択するプログラム
     def selecter(self):
@@ -70,6 +78,15 @@ class GameOverGroup(ObjectGroup):
         
         self.text.text += self.winner
         
+    def machin_stop(self):
+        self.attack.stop = True
+        self.defence.stop = True
+        self.bat.stop = True
+        
+    def music_set(self):
+        self._music.stop_bgm()
+        self._music.play_effect(self.win)
+        
     def update(self):
         super().update()
         
@@ -81,10 +98,15 @@ class GameOverGroup(ObjectGroup):
             self.winner = "Attack"
             self.over = True
             self.text_set()
+            self.machin_stop()
+            self.music_set()
             
         elif self.counter.count <= 0:
             self.winner = "Defense"
             self.over = True
             self.text_set()
+            self.machin_stop()
+            self.music_set()
+            
         
         

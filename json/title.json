@@ -39,7 +39,7 @@
             "name": "text2",
             "tag" :"text2",
             "layer": 5,
-            "text": "FINISH ",
+            "text": "FINISH",
             "text_size": 50,
             "TTF": "JF-Dot-shinonome12.ttf",
             "color": {

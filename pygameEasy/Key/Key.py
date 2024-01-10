@@ -19,6 +19,7 @@ key_dict["up"] = K_UP
 key_dict["down"] = K_DOWN
 key_dict["left"] = K_LEFT
 key_dict["right"] = K_RIGHT
+key_dict["back"] = K_BACKSPACE
 
 @injector.singleton
 class Key(I0,I1,I2,Singleton):

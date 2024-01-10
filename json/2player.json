@@ -7,7 +7,7 @@
             "use": "shooting",
             "class": "Defense", 
             "pos": [0, 0], 
-            "name" : "machine", 
+            "name" : "defence", 
             "tag": "Test", 
             "path": "fighter_a.png", 
             "size":[110,110],
@@ -22,12 +22,12 @@
             "use": "shooting",
             "class": "Attack", 
             "pos": [0,0], 
-            "name" : "test", 
+            "name" : "attack", 
             "tag": "Test", 
             "path": "fighter_c.png",
             "size":[110,110],
             "layer":5, 
-            "speed": 12,
+            "speed": 15,
             "ball_data": {
                 "use": "shooting",
                 "class": "Bullet",
@@ -35,7 +35,17 @@
                 "name": "ball",
                 "tag": "test",
                 "path": "bullet.png",
-                "layer": 5
+                "layer": 5,
+                "effect": {
+                    "use":"shooting",
+                    "class": "BulletEffect",
+                    "pos": [0,0],
+                    "name": "effect",
+                    "tag": "effect",
+                    "path": "bomb.PNG",
+                    "layer":5,
+                    "size": [150,50]
+                }
             },
             "kid": [
                 
@@ -74,7 +84,7 @@
             "TTF": null,
             "color": {"red": 255, "green": 255, "blue": 255, "trans": 30},
             "antialias": true,
-            "count": 40
+            "count": 50
 
         },
 
@@ -140,7 +150,10 @@
                 "counter": "counter",
                 "text": "winner",
                 "select1": "over_select1",
-                "select2": "over_select2"
+                "select2": "over_select2",
+                "attack": "attack",
+                "defence": "defence"
+
             }
         }
     ]
