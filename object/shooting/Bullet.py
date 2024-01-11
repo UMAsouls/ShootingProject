@@ -37,11 +37,11 @@ class Bullet(GameObject):
     
     #ストレート       
     def set_velocity_street(self):
-        self.set_velocity(500, -90)
+        self.set_velocity(850, -90)
 
     #カーブ
     def set_velocity_crave(self, gravity):
-        self.set_velocity(1000,-45)
+        self.set_velocity(900,-30)
         vx0 = self.vel.x
         vy0 = self.vel.y
         
@@ -53,7 +53,7 @@ class Bullet(GameObject):
 
     #逆カーブ
     def set_velocity_uncrave(self, gravity):
-        self.set_velocity(1000,-135)
+        self.set_velocity(900,-150)
         vx0 = self.vel.x
         vy0 = self.vel.y
         
@@ -82,6 +82,8 @@ class Bullet(GameObject):
         self.vel.y = -1 * (self.vel.x **2 + self.vel.y **2 ) **0.5 * math.sin(math.radians(angle_ref + 90))
         self.mode = -1
         
+        
+        
     def bomb(self):
         self._music.play_effect(self.hit)
         effect = self._obj_setter.make_obj(self.effect_data)
@@ -92,7 +94,10 @@ class Bullet(GameObject):
     def on_collide(self, obj: GameObject):
         if isinstance(obj, Bat):
             if self.mode != -1:
-                self.reflect(obj.angle)
+                if obj.mode == 1:
+                    self.reflect(obj.angle)
+                elif obj.mode == 2:
+                    self.reflect(obj.angle - 180)
             
            
     def update(self):

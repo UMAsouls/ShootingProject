@@ -33,7 +33,7 @@ class Bat(GameObject):
         self.change_pivot("center")
         self.radius = 180
         self.position = [100,50]    #親positionとの相対位置
-        self.mode = False
+        self.mode = 0
         
         self.swing = self._music.get_sound("light_saber1.mp3")
         self.stop = False
@@ -46,12 +46,20 @@ class Bat(GameObject):
         pass
 
     def rotate_bat(self):
-        if self.mode :
+        if self.mode == 1 :
             self.visible = True
             self.angle += 360*self.clock.get_rawtime()//1000
             if self.angle >= 180:
-                self.mode = False
+                self.mode = 0
                 self.count = 0
+                
+        elif self.mode == 2:
+            self.visible = True
+            self.angle -= 360*self.clock.get_rawtime()//1000
+            if self.angle > 180 and self.angle  < 360:
+                self.mode = 0
+                self.count = 0
+            
         else:
             self.visible = False
             self.angle = 0
@@ -71,8 +79,15 @@ class Bat(GameObject):
         #self.position = obj.rect.center
 
         if self._key.get_key_down("enter"):
-            if self.mode == False and self.count >= self.c_lim:
-                self.mode = True
+            if self.mode == 0 and self.count >= self.c_lim:
+                self.mode = 1
+                self._music.play_effect(self.swing)
+                
+                
+        if self._key.get_key_down("p"):
+            if self.mode == 0 and self.count >= self.c_lim:
+                self.mode = 2
+                self.angle = 180
                 self._music.play_effect(self.swing)
             
         if self._key.get_key_up("enter"):

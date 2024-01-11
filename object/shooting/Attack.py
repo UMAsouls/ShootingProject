@@ -16,6 +16,7 @@ class Attack(GameObject):
         self.interval: float = 1.0
 
         self.ball = data["ball_data"]
+        self.max_speed = data["speed"]
         self.speed = data["speed"]
         
         self.change_pivot("center")
@@ -33,6 +34,8 @@ class Attack(GameObject):
         self._stop:bool = False
         
         self.clock = pygame.time.Clock()
+        
+        self.late_time = 0
 
 
     def shoot(self , k):
@@ -43,6 +46,12 @@ class Attack(GameObject):
         self._music.play_effect(self.sound)
         self.interval = 0.0
         
+    def on_collide(self, obj: GameObject):
+        if isinstance(obj, Bullet):
+            if obj.mode == -1:
+                self.late_time = -1
+            
+        
     @property
     def stop(self) -> bool:
         return self._stop
@@ -52,6 +61,8 @@ class Attack(GameObject):
         self._stop = v
         
     def update(self):
+        
+        self.speed = self.max_speed
         self.clock.tick()
         
         super().update()
@@ -59,6 +70,11 @@ class Attack(GameObject):
         
         if self._stop:
             return
+        
+        self.late_time += self.clock.get_time() / 1000
+        
+        if self.late_time < 0:
+            self.speed /= 2
         
         if(self._key.get_key_repeat("a")) and self.rect.left > 0:
             self.vel += Vector(-1*self.speed,0)
