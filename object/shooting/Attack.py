@@ -86,16 +86,16 @@ class Attack(GameObject):
             self.vel += Vector(0,self.speed)
 
         if self.interval >= 0.8:
-            if(self._key.get_key_down("c")):
+            if(self._key.get_key_down("x")):
                 self.shoot(1)
 
-            elif(self._key.get_key_down("b")):
+            elif(self._key.get_key_down("c")):
                 self.shoot(2)
 
             elif(self._key.get_key_down("v")):
                 self.shoot(3)
 
-            elif(self._key.get_key_down("n")):
+            elif(self._key.get_key_down("b")):
                 self.shoot(4)
 
         else:
