@@ -56,8 +56,10 @@ class GameOverGroup(ObjectGroup):
             if self._key.get_key_down("enter"):
                 if self.object == self.select1:
                     self._scene_loader.scene_load("2player.json")
+                    Counter.visible = True
                 elif self.object == self.select2:
                     self._scene_loader.scene_load("title.json")
+                    Counter.visible = True
         else:
             pass
     
@@ -100,6 +102,7 @@ class GameOverGroup(ObjectGroup):
             self.text_set()
             self.machin_stop()
             self.music_set()
+            Counter.visible = False
             
         elif self.counter.count <= 0:
             self.winner = "Defense"
@@ -107,6 +110,7 @@ class GameOverGroup(ObjectGroup):
             self.text_set()
             self.machin_stop()
             self.music_set()
+            Counter.visible = False
             
         
         
