@@ -28,7 +28,7 @@ class Base(GameObject):
 
     def on_collide(self, obj: GameObject):
         if isinstance(obj, Bullet):
-            if not self.damaged:
+            if not self.damaged and obj.mode != -1:
                 self.hp -= 10 
                 self.damaged = True
                 obj.bomb()
