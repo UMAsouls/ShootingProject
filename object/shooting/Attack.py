@@ -89,10 +89,10 @@ class Attack(GameObject):
             if(self._key.get_key_down("x")):
                 self.shoot(1)
 
-            elif(self._key.get_key_down("c")):
+            elif(self._key.get_key_down("v")):
                 self.shoot(2)
 
-            elif(self._key.get_key_down("v")):
+            elif(self._key.get_key_down("c")):
                 self.shoot(3)
 
             elif(self._key.get_key_down("b")):
