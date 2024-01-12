@@ -36,6 +36,7 @@
                 "tag": "test",
                 "path": "bullet.png",
                 "layer": 5,
+                "size": [30, 90],
                 "effect": {
                     "use":"shooting",
                     "class": "BulletEffect",
@@ -44,7 +45,7 @@
                     "tag": "effect",
                     "path": "bomb.PNG",
                     "layer":5,
-                    "size": [150,50]
+                    "size": [180,60]
                 }
             },
             "kid": [

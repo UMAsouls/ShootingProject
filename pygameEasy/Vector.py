@@ -9,6 +9,14 @@ class Vector:
         self.x = x
         self.y = y
         
+    @classmethod
+    def get_by_polar(cls, mag, angle) -> "Vector":
+        
+        x = mag*np.cos(angle)
+        y = mag*np.sin(angle)
+        
+        return Vector(x,y)
+        
     #コピーコンストラクタ
     def __copy__(self) -> "Vector":
         return Vector(self.x, self.y)
@@ -76,8 +84,7 @@ class Vector:
     
     #正規化
     def normalize(self) -> "Vector":
-        ang = np.radians(self.angle())
-        return Vector(np.sin(ang), np.cos(ang))
+        return Vector(self.x/self.mag(), self.y/self.mag())
     
     def change2list(self) -> list[int]:
         return [self.x, self.y]

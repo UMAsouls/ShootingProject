@@ -84,7 +84,7 @@ class Bat(GameObject):
                 self._music.play_effect(self.swing)
                 
                 
-        if self._key.get_key_down("p"):
+        if self._key.get_key_down("r_shift"):
             if self.mode == 0 and self.count >= self.c_lim:
                 self.mode = 2
                 self.angle = 180
