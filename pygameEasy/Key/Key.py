@@ -20,6 +20,7 @@ key_dict["down"] = K_DOWN
 key_dict["left"] = K_LEFT
 key_dict["right"] = K_RIGHT
 key_dict["back"] = K_BACKSPACE
+key_dict["R_shift"] = K_RSHIFT
 
 @injector.singleton
 class Key(I0,I1,I2,Singleton):
