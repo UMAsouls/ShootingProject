@@ -16,7 +16,12 @@ class Bullet(GameObject):
         self.t = 0
         self.mode = 0
         
-        self.disp_rect = pygame.display.get_surface().get_rect()
+        self.lim_rect = pygame.display.get_surface().get_rect().copy()
+        self.disp_rect = pygame.display.get_surface().get_rect().copy()
+        
+        self.lim_rect.size = [self.lim_rect.right + 200, self.lim_rect.bottom + 20]
+        
+        self.lim_rect.midbottom = self.disp_rect.midbottom
         
         self.vel = Vector(2000,-90)
         
@@ -151,5 +156,5 @@ class Bullet(GameObject):
 
         self._position += self.vel * self.clock.get_rawtime() / 1000
         
-        if not self.disp_rect.colliderect(self.rect) and (self.position.y >= self.disp_rect.bottom or self.position.y < -10):
+        if not self.lim_rect.colliderect(self.rect):
             self.kill()

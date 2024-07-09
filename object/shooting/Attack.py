@@ -29,7 +29,7 @@ class Attack(GameObject):
         
         self.angle = 180
         
-        self.pos_lim = [0, size[1]*2/15, size[0], size[1] * 1 / 3]
+        self.pos_lim = [0, size[1]*1/15, size[0], size[1] * 1 / 3]
         
         self._stop:bool = False
         

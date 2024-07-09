@@ -84,6 +84,8 @@ class Vector:
     
     #正規化
     def normalize(self) -> "Vector":
+        if self.mag() == 0:
+            return Vector(0,0)
         return Vector(self.x/self.mag(), self.y/self.mag())
     
     def change2list(self) -> list[int]:

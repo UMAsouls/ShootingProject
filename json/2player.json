@@ -12,7 +12,7 @@
             "path": "fighter_a.png", 
             "size":[110,110],
             "layer":5, 
-            "speed": 12,
+            "speed": 6,
             "kid": [
                 {"use": "shooting", "class": "Bat", "pos":[0,0], "name":"bat","tag":"Bat","path":"bat_red.png","layer":6, "speed":7}
             ]
@@ -27,7 +27,7 @@
             "path": "fighter_c.png",
             "size":[110,110],
             "layer":5, 
-            "speed": 15,
+            "speed": 7,
             "ball_data": {
                 "use": "shooting",
                 "class": "Bullet",

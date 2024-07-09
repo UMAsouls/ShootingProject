@@ -17,10 +17,12 @@ class Base(GameObject):
         disp_rect = pygame.display.get_surface().get_rect()
         
         self.damaged = False
-        self.inv_max = 50
+        self.inv_max = 0.8
         self.inv_time = self.inv_max
         
         self.size = [disp_rect.size[0], disp_rect.size[1]//8]
+        
+        self.clock = pygame.time.Clock()
         
         self.change_pivot("bottomleft")
         
@@ -38,10 +40,11 @@ class Base(GameObject):
 
         
     def update(self):
+        self.clock.tick()
         super().update()
         #print("Hp",self.hp, self.inv_time)
         if(self.damaged):
-            self.inv_time -= 1
+            self.inv_time -= self.clock.get_time()/1000
             if(self.inv_time < 0):
                 self.damaged = False
                 self.inv_time = self.inv_max

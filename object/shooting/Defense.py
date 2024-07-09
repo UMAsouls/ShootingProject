@@ -22,10 +22,10 @@ class Defense(GameObject):
         
         self.position = [size[0]/2, size[1]*7//10]
         
-        self.pos_lim = [0, size[1] *4 / 9, size[0], size[1]]
+        self.pos_lim = [0, size[1] *5 / 9, size[0], size[1]]
         
         self._stop:bool = False
-        
+    
     @property
     def stop(self) -> bool:
         return self._stop

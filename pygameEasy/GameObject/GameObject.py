@@ -305,7 +305,7 @@ class GameObject(I0,I1,I2,I3,I4,I5):
         if("layer" in data): self.layer = data["layer"]
         
         if("path" in data):
-            self._base_image = pygame.image.load(self._path + f"/image/{data['path']}")
+            self._base_image = pygame.image.load(self._path + f"/image/{data['path']}").convert_alpha()
         self.image = self._base_image.subsurface(self._base_image.get_rect())
         self.rect = self.image.get_rect()
         

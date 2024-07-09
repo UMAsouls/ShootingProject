@@ -102,7 +102,7 @@ class GameOverGroup(ObjectGroup):
             self.text_set()
             self.machin_stop()
             self.music_set()
-            Counter.visible = False
+            self.counter.visible = False
             
         elif self.counter.count <= 0:
             self.winner = "Defense"
@@ -110,7 +110,7 @@ class GameOverGroup(ObjectGroup):
             self.text_set()
             self.machin_stop()
             self.music_set()
-            Counter.visible = False
+            self.counter.visible = False
             
         
         

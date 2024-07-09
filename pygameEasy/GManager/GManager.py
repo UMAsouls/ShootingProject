@@ -50,6 +50,8 @@ class GManager:
         
         self.set_data: function = None
         
+        self.clock = pygame.Clock()
+        
     #関数の取得
     def set_func(self, set_data) -> None:
         self.set_data = set_data
@@ -67,6 +69,9 @@ class GManager:
     
     #ゲームの更新処理
     def update(self) -> None:
+        self.clock.tick()
+        print(self.clock.get_fps())
+        
         self.drawer.update()
         self.drawer.draw(self.screen)
         
