@@ -1,14 +1,13 @@
-import os
-
-print(os.getcwd())
-
-
-for i in os.listdir("object/test"):
-    if(i[0] == "_" or i[0] == "."):
-        continue
-    exec(f"from object.test import {i}"[0:-3])
-
-
-
-__all__ = [k[0:-3] for k in filter(lambda x: x[0] != "_" and x[0] != ".",
-                    os.listdir(os.path.dirname(__file__)))]
+from object.test import TestBase
+from object.test import TestBat
+from object.test import TestBG
+from object.test import TestBullet
+from object.test import TestGoal
+from object.test import TestGroup
+from object.test import TestMachine
+from object.test import TestObject
+from object.test import TestText
+from object.test import TestTitle
+from object.test import TitleGroup
+from object.test import TitleText1
+from object.test import TitleText2

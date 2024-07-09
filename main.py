@@ -5,7 +5,7 @@ from typing import Any
 
 import sys
 
-os.chdir(os.path.dirname(os.path.abspath(__file__)))
+#os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
 #sys.path.append(os.path.dirname(os.path.abspath(__file__)) + "\\Engine")
 
@@ -26,10 +26,8 @@ from pygameEasy.ObjectGroup import ObjectGroup
 
 from pygameEasy.DependencyMaker import Dependency
 
-for i in os.listdir("object"):
-    if i[0] == "_" or i[0] == ".": 
-        continue
-    exec(f"from object" + " import " + f"{i}")
+from object import shooting
+from object import test
     
     
 PROJECT_PATH = os.getcwd()
