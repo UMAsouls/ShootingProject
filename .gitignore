@@ -161,3 +161,7 @@ cython_debug/
 ShootingProject.code-workspace
 .vscode/pyEasy.code-snippets
 .gitignore
+
+
+ShootingProject/
+test/
