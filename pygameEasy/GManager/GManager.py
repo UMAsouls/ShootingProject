@@ -26,6 +26,12 @@ def get_parent_path(level):
        path = os.path.abspath(os.path.join(path, os.pardir)) 
     return path
 
+#joystick.init()が干渉して遅い場合があるためこっちのinit
+def pygame_init():
+    pygame.display.init()
+    pygame.mixer.init()
+    pygame.font.init()
+
 
 #ゲームの統括クラス
 class GManager:
@@ -38,7 +44,8 @@ class GManager:
         object_setter: IObjectSetter,
         music: IMusic
         ) -> None:
-        pygame.init()
+        
+        pygame_init()
         #ゲーム画面
         self.screen = pygame.display.set_mode([0,0], DOUBLEBUF|HWSURFACE|NOFRAME)
         self.groups: IGroups = groups
@@ -50,7 +57,7 @@ class GManager:
         
         self.set_data: function = None
         
-        self.clock = pygame.Clock()
+        self.clock = pygame.time.Clock()
         
     #関数の取得
     def set_func(self, set_data) -> None:
@@ -70,7 +77,6 @@ class GManager:
     #ゲームの更新処理
     def update(self) -> None:
         self.clock.tick()
-        print(self.clock.get_fps())
         
         self.drawer.update()
         self.drawer.draw(self.screen)

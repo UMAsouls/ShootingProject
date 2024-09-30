@@ -81,7 +81,6 @@ def make_grp_from_data(data: dict[str,Any]):
     if(data["class"] == ""):
         grp_type = ObjectGroup
     else:
-        print(data["class"])
         grp_type = eval(f"{data['use']}.{data['class']}.{data['class']}")
         
     grp = grp_type(
@@ -98,7 +97,6 @@ def make_grp_from_data(data: dict[str,Any]):
     return grp
 
 #グループを追加する処理
-#後々作る
 def add_group(data: dict, groups: IGroups, drawer: IDrawer):
     grp = make_grp_from_data(data)
     groups.add_group(grp)

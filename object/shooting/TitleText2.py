@@ -12,7 +12,7 @@ class TitleText2(TextObject):
         size = pygame.display.get_surface().get_size()
         
         self.change_pivot("center")
-        self.position = Vector(size[0]//2, self.position.y)
+        self.position = Vector(size[0]//2, size[1]*3//5 + self.size.y*2)
         
         
         

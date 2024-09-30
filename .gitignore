@@ -163,5 +163,5 @@ ShootingProject.code-workspace
 .gitignore
 
 
-ShootingProject/
-test/
+ShootingProject
+test/test_pygame.py
