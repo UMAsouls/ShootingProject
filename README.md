@@ -7,7 +7,11 @@
 
 <!-- ここにプレイ動画のGIFを掲載 -->
 
-## プレイ動画
+## プレイ画面
+
+<img width="2560" height="1440" alt="image" src="https://github.com/user-attachments/assets/ff1eb60e-fe16-42ab-872a-8f2013f64826" />
+<img width="2560" height="1440" alt="image" src="https://github.com/user-attachments/assets/8d6d1aaa-8728-40ba-847e-74caf641311d" />
+
 
 <!-- ここにプレイ動画へのリンクを掲載 -->
 
